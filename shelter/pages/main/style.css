@@ -108,15 +108,10 @@ p {
 } 
 
 .header {
-    margin-top: 60px;
+    margin-top: 30px;
     height: 60px;
 }
 
-    @media (max-width: 1279px) {
-        .header {
-            margin-top: 30px;
-        }
-    }
 
 .header__wrapper {
     display: flex;
@@ -216,7 +211,7 @@ p {
 }
 
 .not-only {
-    margin-top: 60px;
+    margin-top: 90px;
 }
 
 
@@ -509,13 +504,11 @@ p {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
     gap: 53px;
 }
 
     @media (max-width: 1279px) {
         .slider-wrapper {
-            gap: 0px;
             justify-content: space-between;
         }
     }
