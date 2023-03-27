@@ -1,5 +1,6 @@
-
+console.log('Самопроверка:\nСтраница Main(60)\n1. Страница Main(+7)\n2. Верстка соответствует макету(+35)\n3. Требования к css(+6)\n 4.Интерактивность элементов(+12) \n Страница Pets\n 5.Проверка вёрстки(+7) \n 6.Вёрстка соответствует макету \n 7. Требования к css(+4) \n 8. Интерактивность элементов(+14)');
 //----------------Hamburger-menu-----------------/
+/*
 const HAMBURGER = document.querySelector('.hamburger-container');
 const MENU = document.querySelector('.navigation');
 const navLinks = document.querySelectorAll('.navigation__element__link');
@@ -112,4 +113,4 @@ CAROUSEL.addEventListener('animationend', (animationEvent) => {
     BTN_LEFT.addEventListener('click', moveLeft);
     BTN_RIGHT.addEventListener('click', moveRight);
 } )
-
+*/
