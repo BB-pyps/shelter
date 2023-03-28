@@ -543,7 +543,7 @@ p {
 .slider-wrapper_arrow:hover {
     cursor: pointer;
     background-color: var(--color-primary-light);
-    border-color: var(--color-primary-light);
+    border:2px solid var(--color-primary-light);
 }
 
 .arrow-left {
@@ -684,7 +684,7 @@ p {
 .card:hover .card__button{
     cursor: pointer;
     background-color: var(--color-primary-light);
-    border-color: var(--color-primary-light);
+    border:2px solid var(--color-primary-light);
     
 }
 
