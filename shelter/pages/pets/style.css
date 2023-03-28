@@ -186,11 +186,17 @@ p {
 
 .active {
     border-bottom: 3px solid var(--color-primary);
+    color: var(--color-dark-title);
 }
 
 .navigation__element__link:hover {
     color: var(--color-dark);
     cursor: pointer;
+}
+
+.navigation__element__link.active:hover {
+    color: var(--color-dark-title);
+    cursor: default;
 }
 
 .our-friends {
@@ -286,6 +292,7 @@ p {
     align-items: center;
     background-color: var(--color-nav-active);
     border-radius: 9px;
+    transition: 0.5s;
 }
 
     @media (max-width: 1279px) {
@@ -338,6 +345,7 @@ p {
     letter-spacing: 0.06em;
     color: var(--color-dark);
     background-color: transparent;
+    transition: 0.5s;
 }
 
 .slider-buttons {
@@ -366,6 +374,7 @@ p {
     height: 52px;
     border: 2px solid var(--color-primary);
     border-radius: 100px;
+    transition: 0.5s;
 }
 
 .slider-button_disabled {
