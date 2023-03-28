@@ -78,7 +78,7 @@ const createCardTemplate = () => {
 }
 
 const moveLeft = () => {
-  CAROUSEL.classList.add('transition-left');
+  CAROUSEL.classList.add('transition-left'); 
   BTN_LEFT.removeEventListener('click', moveLeft);
   BTN_RIGHT.removeEventListener('click', moveRight);
 }
