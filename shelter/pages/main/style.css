@@ -529,13 +529,16 @@ p {
 
     @media (max-width: 768px) {
         .slider-wrapper {
-            flex-direction: column-reverse;
-            width: 270px;
             margin: 0 auto;
             position: relative;
         }
     } 
 
+    @media (max-width: 400px) {
+        .slider-wrapper {
+            flex-direction: column-reverse;
+        }
+    }
 
 .slider-wrapper_arrow {
     width: 52px;
@@ -559,7 +562,7 @@ p {
     background-image:url('../../assets/icons/Arrow-left.svg');
 }
 
-    @media (max-width: 767px) {
+    @media (max-width: 400px) {
         .arrow-left {
             position: absolute;
             bottom: -70px;
@@ -572,6 +575,12 @@ p {
 }
 
     @media (max-width: 767px) {
+        .arrow-right {
+            order: 3;
+        }
+    }
+
+    @media (max-width: 400px) {
         .arrow-right {
             position: absolute;
             bottom: -70px;
@@ -597,6 +606,15 @@ p {
         order: 1;
     }
  }
+
+ @media (max-width: 400px) {
+    .carousel-wrapper {
+        order: 1;
+    }
+ }
+
+ 
+
 
 /* .carousel {
     display: flex;
