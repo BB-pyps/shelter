@@ -110,12 +110,12 @@ p {
     width: 186px;
 }
 
-.active-logo {
-    position: fixed;
-    top: 30px;
-    right: 123px;
-    z-index: 55;
-}
+    @media (max-width: 767px) {
+        .header__logo {
+        margin-left: 10px;
+        }
+    }
+
 
 .header__logo__title {
     font-family: 'Georgia';
@@ -306,7 +306,7 @@ p {
         }
     }
 
-    @media (max-width: 767px) {
+    @media (max-width: 610px) {
         .card:nth-of-type(n+4){
             display: none;
         }
@@ -570,7 +570,7 @@ p {
     @media (max-width: 767px) {
         .hamburger-container {
             display: block;
-            margin-right: 43px;
+            margin-right: 10px;
             z-index: 100;
             width: 30px;
             height: 22px;
