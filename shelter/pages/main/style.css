@@ -133,12 +133,6 @@ p {
         }
     }
 
-.active-logo {
-    position: fixed;
-    top: 30px;
-    right: 123px;
-    z-index: 55;
-}
 
 .header__logo__title {
     font-family: 'Georgia';
