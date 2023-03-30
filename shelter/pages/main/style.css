@@ -127,6 +127,12 @@ p {
     width: 186px;
 }
 
+    @media (max-width: 767px) {
+        .header__logo {
+        margin-left: 10px;
+        }
+    }
+
 .active-logo {
     position: fixed;
     top: 30px;
@@ -526,14 +532,15 @@ p {
             justify-content: space-between;
         }
     }
-/* 
+
     @media (max-width: 768px) {
         .slider-wrapper {
-            flex-direction: column;
+            flex-direction: column-reverse;
             width: 270px;
             margin: 0 auto;
+            position: relative;
         }
-    } */
+    } 
 
 
 .slider-wrapper_arrow {
@@ -560,10 +567,9 @@ p {
 
     @media (max-width: 767px) {
         .arrow-left {
-            order: 1;
-            margin-left: 43px;
-            margin-right: auto;
-            margin-top: 20px;
+            position: absolute;
+            bottom: -70px;
+            left: 40px;
         }
     }
 
@@ -573,10 +579,9 @@ p {
 
     @media (max-width: 767px) {
         .arrow-right {
-            order: 1;
-            margin-left: auto;
-            margin-right: 43px;
-            margin-top: -52px;
+            position: absolute;
+            bottom: -70px;
+            right: 40px;
         }
     }
 
@@ -588,8 +593,16 @@ p {
  @media (max-width: 1279px) {
     .carousel-wrapper {
         width: 580px;
+        top: 10px;
     }
-}
+ }
+
+ @media (max-width: 767px) {
+    .carousel-wrapper {
+        width: 270px;
+        order: 1;
+    }
+ }
 
 /* .carousel {
     display: flex;
@@ -726,7 +739,7 @@ p {
     @media (max-width: 767px) {
         .our-friends__button {
             margin-bottom: 0;
-            margin-top: 42px;
+            margin-top: 114px;
         }
     }
 
@@ -1187,6 +1200,9 @@ p {
      background-image: url('../../assets/icons/icon-phone.svg');
  }
 
+
+ /*Гамбургер*/
+
 .hamburger-container {
     display: none;
     position: absolute;
@@ -1197,7 +1213,7 @@ p {
     @media (max-width: 767px) {
         .hamburger-container {
             display: block;
-            margin-right: 43px;
+            margin-right: 10px;
             z-index: 100;
             width: 30px;
             height: 22px;
