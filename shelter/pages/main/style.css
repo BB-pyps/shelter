@@ -250,13 +250,20 @@ p {
     }
 
 .not-only__content {
-    width: 460px;
     padding-top: 163px;
     margin-bottom: 243px;
 }
 
+@media (min-width: 1279px) {
+    .not-only__content {
+        max-width: 460px;
+    }
+}
+
     @media (max-width: 1279px) {
         .not-only__content {
+            max-width: calc(100% - 250px);
+            min-width: 460px;
             padding-top: 0px;
             margin-bottom: 100px;
         }
@@ -264,7 +271,7 @@ p {
 
     @media (max-width: 767px) {
         .not-only__content {
-            width: 300px;
+        min-width: 300px;
             margin: 0 auto;
             margin-bottom: 105px;
         }
