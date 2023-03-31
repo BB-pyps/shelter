@@ -392,7 +392,7 @@ p {
     gap: 120px;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 950px) {
         .about__wrapper {
             flex-direction: column;
             gap: 80px;
@@ -412,7 +412,7 @@ p {
     background-image: url('../../assets/images/about-pets.png');
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 950px) {
         .about__block__picture {
         order: 1;
         }
@@ -425,21 +425,24 @@ p {
         background-size: contain;
         }
     }
-
-.about__block__content {
-    width: 430px;
+@media(min-width: 950px){
+    .about__block__content {
+        max-width: 430px;
+    }
 }
 
 
-    @media (max-width: 1279px) {
+
+    @media (max-width: 950px) {
          .about__block__content {
             order: 0;
+             max-width: calc(100% - 280px);
         }
     }
 
     @media (max-width: 767px) {
         .about__block__content {
-           width: 300px;
+           min-width: 300px;
            margin: 0 auto;
        }
    }
@@ -573,7 +576,7 @@ p {
         .arrow-left {
             position: absolute;
             bottom: -70px;
-            left: 40px;
+            left: 60px;
         }
     }
 
@@ -591,7 +594,7 @@ p {
         .arrow-right {
             position: absolute;
             bottom: -70px;
-            right: 40px;
+            right: 60px;
         }
     }
 
