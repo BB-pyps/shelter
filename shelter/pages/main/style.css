@@ -127,12 +127,12 @@ p {
     width: 186px;
 }
 
-.active-logo {
-    position: fixed;
-    top: 30px;
-    right: 123px;
-    z-index: 55;
-}
+    @media (max-width: 767px) {
+        .header__logo {
+        margin-left: 10px;
+        }
+    }
+
 
 .header__logo__title {
     font-family: 'Georgia';
@@ -250,13 +250,20 @@ p {
     }
 
 .not-only__content {
-    width: 460px;
     padding-top: 163px;
     margin-bottom: 243px;
 }
 
+@media (min-width: 1279px) {
+    .not-only__content {
+        max-width: 460px;
+    }
+}
+
     @media (max-width: 1279px) {
         .not-only__content {
+            max-width: calc(100% - 250px);
+            min-width: 460px;
             padding-top: 0px;
             margin-bottom: 100px;
         }
@@ -264,7 +271,7 @@ p {
 
     @media (max-width: 767px) {
         .not-only__content {
-            width: 300px;
+        min-width: 300px;
             margin: 0 auto;
             margin-bottom: 105px;
         }
@@ -385,7 +392,7 @@ p {
     gap: 120px;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 950px) {
         .about__wrapper {
             flex-direction: column;
             gap: 80px;
@@ -405,7 +412,7 @@ p {
     background-image: url('../../assets/images/about-pets.png');
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 950px) {
         .about__block__picture {
         order: 1;
         }
@@ -419,20 +426,23 @@ p {
         }
     }
 
-.about__block__content {
-    width: 430px;
-}
+    @media(min-width: 950px){
+        .about__block__content {
+            max-width: 430px;
+        }
+    }
 
-
-    @media (max-width: 1279px) {
+    @media (max-width: 950px) {
          .about__block__content {
             order: 0;
+            max-width: calc(100% - 280px);
         }
     }
 
     @media (max-width: 767px) {
         .about__block__content {
-           width: 300px;
+           max-width: calc(100% - 80px);
+           min-width: 300px;
            margin: 0 auto;
        }
    }
@@ -477,8 +487,7 @@ p {
     @media (max-width: 767px) {
         .about__block__text  {
             text-align: justify;
-            width: 270px;
-            margin: 0 auto;
+            margin: 0 15px;
             margin-top: 25px;
         }
         .about__block__text:last-child  {
@@ -526,15 +535,19 @@ p {
             justify-content: space-between;
         }
     }
-/* 
+
     @media (max-width: 768px) {
         .slider-wrapper {
-            flex-direction: column;
-            width: 270px;
             margin: 0 auto;
+            position: relative;
         }
-    } */
+    } 
 
+    @media (max-width: 400px) {
+        .slider-wrapper {
+            flex-direction: column-reverse;
+        }
+    }
 
 .slider-wrapper_arrow {
     width: 52px;
@@ -558,12 +571,11 @@ p {
     background-image:url('../../assets/icons/Arrow-left.svg');
 }
 
-    @media (max-width: 767px) {
+    @media (max-width: 400px) {
         .arrow-left {
-            order: 1;
-            margin-left: 43px;
-            margin-right: auto;
-            margin-top: 20px;
+            position: absolute;
+            bottom: -70px;
+            left: 60px;
         }
     }
 
@@ -573,10 +585,15 @@ p {
 
     @media (max-width: 767px) {
         .arrow-right {
-            order: 1;
-            margin-left: auto;
-            margin-right: 43px;
-            margin-top: -52px;
+            order: 3;
+        }
+    }
+
+    @media (max-width: 400px) {
+        .arrow-right {
+            position: absolute;
+            bottom: -70px;
+            right: 60px;
         }
     }
 
@@ -588,8 +605,25 @@ p {
  @media (max-width: 1279px) {
     .carousel-wrapper {
         width: 580px;
+        top: 10px;
     }
-}
+ }
+
+ @media (max-width: 767px) {
+    .carousel-wrapper {
+        width: 270px;
+        order: 1;
+    }
+ }
+
+ @media (max-width: 400px) {
+    .carousel-wrapper {
+        order: 1;
+    }
+ }
+
+ 
+
 
 /* .carousel {
     display: flex;
@@ -726,7 +760,7 @@ p {
     @media (max-width: 767px) {
         .our-friends__button {
             margin-bottom: 0;
-            margin-top: 42px;
+            margin-top: 114px;
         }
     }
 
@@ -880,7 +914,7 @@ p {
     gap: 30px;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 980px) {
         .in-addition__wrapper {
             flex-direction: column;
             gap: 60px;
@@ -900,7 +934,7 @@ p {
     background-repeat: no-repeat;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 980px) {
         .in-addition__picture {
             order: 1;
         }
@@ -914,19 +948,25 @@ p {
         }
     }
 
-.in-addition__content {
-    width: 380px;
-}
 
-    @media (max-width: 1279px) {
+    @media(min-width: 980px){
+        .in-addition__content {
+            max-width: 380px;
+        }
+    }
+
+    @media (max-width: 980px) {
         .in-addition__content {
             order: 0;
+            max-width: calc(100% - 330px);
+            margin: 0 auto;
         }
     }
 
     @media (max-width: 767px) {
         .in-addition__content {
-            width: 280px;
+            max-width: calc(100% - 90px);
+            min-width: 280px;
             margin: 0 auto;
         }
     }
@@ -978,6 +1018,8 @@ p {
     @media (max-width: 767px) {
         .in-addition__link {
             width: 281px;
+            margin: 0 auto;
+            margin-bottom: 20px;
         }
     }
 
@@ -1024,6 +1066,19 @@ p {
     line-height: 18px;
     color: var(--color-fish);
 }
+
+    @media (max-width: 980px) {
+        .in-addition__text {
+
+        text-align: justify;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .in-addition__text {
+        text-align: justify;
+        }
+    }
 
 .footer {
     background: url('../../assets/images/noise_transparent@2x.png'), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%) 
@@ -1187,6 +1242,9 @@ p {
      background-image: url('../../assets/icons/icon-phone.svg');
  }
 
+
+ /*Гамбургер*/
+
 .hamburger-container {
     display: none;
     position: absolute;
@@ -1197,7 +1255,7 @@ p {
     @media (max-width: 767px) {
         .hamburger-container {
             display: block;
-            margin-right: 43px;
+            margin-right: 10px;
             z-index: 100;
             width: 30px;
             height: 22px;
