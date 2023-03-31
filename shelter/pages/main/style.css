@@ -425,23 +425,23 @@ p {
         background-size: contain;
         }
     }
-@media(min-width: 950px){
-    .about__block__content {
-        max-width: 430px;
+
+    @media(min-width: 950px){
+        .about__block__content {
+            max-width: 430px;
+        }
     }
-}
-
-
 
     @media (max-width: 950px) {
          .about__block__content {
             order: 0;
-             max-width: calc(100% - 280px);
+            max-width: calc(100% - 280px);
         }
     }
 
     @media (max-width: 767px) {
         .about__block__content {
+           max-width: calc(100% - 80px);
            min-width: 300px;
            margin: 0 auto;
        }
@@ -487,8 +487,7 @@ p {
     @media (max-width: 767px) {
         .about__block__text  {
             text-align: justify;
-            width: 270px;
-            margin: 0 auto;
+            margin: 0 15px;
             margin-top: 25px;
         }
         .about__block__text:last-child  {
@@ -915,7 +914,7 @@ p {
     gap: 30px;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 980px) {
         .in-addition__wrapper {
             flex-direction: column;
             gap: 60px;
@@ -935,7 +934,7 @@ p {
     background-repeat: no-repeat;
 }
 
-    @media (max-width: 1279px) {
+    @media (max-width: 980px) {
         .in-addition__picture {
             order: 1;
         }
@@ -949,19 +948,25 @@ p {
         }
     }
 
-.in-addition__content {
-    width: 380px;
-}
 
-    @media (max-width: 1279px) {
+    @media(min-width: 980px){
+        .in-addition__content {
+            max-width: 380px;
+        }
+    }
+
+    @media (max-width: 980px) {
         .in-addition__content {
             order: 0;
+            max-width: calc(100% - 330px);
+            margin: 0 auto;
         }
     }
 
     @media (max-width: 767px) {
         .in-addition__content {
-            width: 280px;
+            max-width: calc(100% - 90px);
+            min-width: 280px;
             margin: 0 auto;
         }
     }
@@ -1013,6 +1018,8 @@ p {
     @media (max-width: 767px) {
         .in-addition__link {
             width: 281px;
+            margin: 0 auto;
+            margin-bottom: 20px;
         }
     }
 
@@ -1059,6 +1066,19 @@ p {
     line-height: 18px;
     color: var(--color-fish);
 }
+
+    @media (max-width: 980px) {
+        .in-addition__text {
+
+        text-align: justify;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .in-addition__text {
+        text-align: justify;
+        }
+    }
 
 .footer {
     background: url('../../assets/images/noise_transparent@2x.png'), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%) 
