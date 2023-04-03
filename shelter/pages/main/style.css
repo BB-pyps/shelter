@@ -163,7 +163,7 @@ p {
 }
 
 
-    @media (max-width: 767px) {
+    @media (max-width: 767.9px) {
         .navigation {
             display: flex;
             flex-direction: column;
@@ -193,7 +193,7 @@ p {
     transition: 0.5s;
 }
 
-     @media (max-width: 767px) {
+     @media (max-width: 767.9px) {
         .navigation__element__link {
             font-weight: 400;
             font-size: 32px;
@@ -1252,7 +1252,7 @@ p {
     right: 10px;
 }
 
-    @media (max-width: 767px) {
+    @media (max-width: 767.9px) {
         .hamburger-container {
             display: block;
             margin-right: 10px;
