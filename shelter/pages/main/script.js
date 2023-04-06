@@ -147,12 +147,14 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
         } else {
             generateRandomNumberAndPushElem(firstArr, secondArr);
         }
+        return [firstArr, secondArr];
 }
 
 function generateArrays(firstArr, secondArr){
     for(let i=0; i < numberCards; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
+     return [firstArr, secondArr];
 }
 
 function init(){
@@ -183,7 +185,7 @@ function forward(pastArr, currArr, nextArr){
     currArr = nextArr.slice();
     nextArr = [];
     generateArrays(nextArr, currArr);
-    return (pastArr, currArr, nextArr);
+    return [pastArr, currArr, nextArr];
 }
 
 function changeToBackward(pastArr, currArr, nextArr){
@@ -192,8 +194,26 @@ function changeToBackward(pastArr, currArr, nextArr){
     currArr = changeArr.slice();
     nextArr = [];
     generateArrays(nextArr, currArr);
-    console.log(pastArr, currArr, nextArr);
-    return (pastArr, currArr, nextArr);
+    return [pastArr, currArr, nextArr];
+}
+
+function backward(pastArr, currArr, nextArr){
+    nextArr = [];
+    nextArr = currArr.slice();
+    currArr = [];
+    currArr = pastArr.slice();
+    pastArr = [];
+    generateArrays(pastArr, currArr);
+    return [pastArr, currArr, nextArr];
+}
+
+function changeToForward(pastArr, currArr, nextArr){
+    let changeArr = nextArr.slice();
+    nextArr = currArr.slice();
+    currArr = changeArr.slice();
+    pastArr = [];
+    generateArrays(pastArr, currArr);
+    return [pastArr, currArr, nextArr];
 }
 
 
