@@ -622,15 +622,13 @@ p {
     }
  }
 
- 
 
-
-/* .carousel {
+.carousel {
     display: flex;
     position: relative;
     width: 100%;
     flex-shrink: 0;
-    /* left: -990px; 
+    left: -990px; 
 } 
 
 @keyframes move-right {
@@ -651,7 +649,7 @@ p {
 .transition-left {
     animation-name: move-left;
     animation-duration: 5s;
-} */
+} 
     
 .item {
     display: flex;
