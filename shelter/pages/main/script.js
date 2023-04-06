@@ -129,7 +129,6 @@ const petsData = [
 
 let numberCards;
 
-
 if(window.innerWidth >= 1279){
    numberCards = 3;
 }else if(window.innerWidth <= 767){
@@ -153,7 +152,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 function generateArrays(firstArr, secondArr){
     for(let i=0; i < numberCards; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
-}
+    }
 }
 
 function init(){
@@ -165,16 +164,42 @@ function init(){
     nextArr = [];
     generateArrays(nextArr, currArr);
     pastArr = currArr.slice();
-    curArr = [];
+    currArr = [];
     currArr = nextArr.slice();
     nextArr = [];
     generateArrays(nextArr, currArr);
-    console.log(`pastArr ${pastArr}`);
-    console.log(`currArr ${currArr}`);
-    console.log(`nextArr ${nextArr}`);
+    console.log(pastArr, currArr, nextArr);
+    return [pastArr, currArr, nextArr];
 }
 
-init();
+let cardsArr = init();
+console.log(cardsArr);
+
+
+function forward(pastArr, currArr, nextArr){
+    pastArr = [];
+    pastArr = currArr.slice();
+    currArr = [];
+    currArr = nextArr.slice();
+    nextArr = [];
+    generateArrays(nextArr, currArr);
+    return (pastArr, currArr, nextArr);
+}
+
+function changeToBackward(pastArr, currArr, nextArr){
+    let changeArr = pastArr.slice();
+    pastArr = currArr.slice();
+    currArr = changeArr.slice();
+    nextArr = [];
+    generateArrays(nextArr, currArr);
+    console.log(pastArr, currArr, nextArr);
+    return (pastArr, currArr, nextArr);
+}
+
+
+
+
+
 
 //   console.log(Array.isArray(petsData));
 
