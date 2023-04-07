@@ -128,6 +128,10 @@ const petsData = [
 
 
 let numberCards;
+const leftItem = document.querySelector('#item-left');
+const itemActive =  document.querySelector('#item-active');
+const itemRight = document.querySelector('#itemRight');
+const carouselItems = [leftItem, itemActive, itemRight];
 
 if(window.innerWidth >= 1279){
    numberCards = 3;
@@ -140,10 +144,10 @@ if(window.innerWidth >= 1279){
 function generateRandomNumberAndPushElem(firstArr, secondArr){
     let randomNumber = Math.floor(Math.random() * 8);
         if(((secondArr.length === 0) && (firstArr.length === 0)) ||
-           ((firstArr.length !== 0) && !(firstArr.includes(petsData[randomNumber].name)) && (secondArr.length === 0)) ||
-           ((secondArr.length !== 0) && !(secondArr.includes(petsData[randomNumber].name)) && (firstArr.length === 0)) ||
-           (!(firstArr.includes(petsData[randomNumber].name)) && (!(secondArr.includes(petsData[randomNumber].name))))){
-            firstArr.push(petsData[randomNumber].name);
+           ((firstArr.length !== 0) && (!firstArr.includes(randomNumber) && (secondArr.length === 0))) ||
+           ((secondArr.length !== 0) && (!secondArr.includes(randomNumber) && (firstArr.length === 0))) ||
+           (!firstArr.includes(randomNumber) && !(secondArr.includes(randomNumber)))){
+            firstArr.push(randomNumber);
         } else {
             generateRandomNumberAndPushElem(firstArr, secondArr);
         }
@@ -151,11 +155,13 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 }
 
 function generateArrays(firstArr, secondArr){
-    for(let i=0; i < numberCards; i++){
+    for(let i = 0; i < numberCards; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
      return [firstArr, secondArr];
 }
+
+//Инициализация
 
 function init(){
     let pastArr = [];
@@ -218,11 +224,6 @@ function changeToForward(pastArr, currArr, nextArr){
 
 
 
-
-
-
-//   console.log(Array.isArray(petsData));
-
 // let activeElementsNames = [];
 // function getActive(){
 //     let activeItem = document.querySelector('#item-active');
@@ -233,26 +234,36 @@ function changeToForward(pastArr, currArr, nextArr){
 //     return activeElementsNames;
 // }
 
-// const createCardTemplate = () => {
-//     const card = document.createElement('li');
-//     card.classList.add('card');
-//     let number = Math.floor(Math.random(8));
-//     getActive();
-//     if(!activeElementsNames.includes(petsData[number].name)){
-//         let currentName = petsData[number].name.toLowerCase() ;
-//         const cardPicture = document.createElement('img');
-//         cardPicture.classList.add('card__picture');
-//         cardPicture.src = `../../assets/images/${currentName}.png`;
-//         cardPicture.alt = `${petsData[number].type} ${petsData[number].name}`;
-//         cardPicture.width = '270';
-//         cardPicture.height = '270';
-//         card.append(cardPicture);
-//         return card;
-//     } else {
-//         createCardTemplate();
-//     }
+function createCardTemplate(currentCardNumber){
+    const card = document.createElement('li');
+    card.classList.add('card');
+    const contentCard = `<img src="../../assets/images/${petsData[currentCardNumber].name.toLowerCase()}.png" 
+    class="card__picture" alt="${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}"
+    width="270" height="270">
+    <span class="card__title">${petsData[currentCardNumber].name}</span>
+    <button class="card__button">Learn more</button>`;
+    card.insertAdjacentHTML('afterbegin', contentCard);
+    // const cardPicture = document.createElement('img');
+    // cardPicture.classList.add('card__picture');
+    // cardPicture.src = `../../assets/images/${currentName}.png`;
+    // cardPicture.alt = `${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}`;
+    // cardPicture.width = '270';
+    // cardPicture.height = '270';
+    // card.append(cardPicture);
+    // const cardTitle =  document.createElement('span');
+    // const cardButton = document.createElement('button');
+    // cardTitle.classList.add('card__title');
+    // cardButton.classList.add('card__button');
+    console.log(card);
+    return card;
+}
 
-// }
+createCardTemplate(1);
+
+function fillCarouselItems(){
+
+}
+
 
 // const moveLeft = () => {
 //   CAROUSEL.classList.add('transition-left'); 
