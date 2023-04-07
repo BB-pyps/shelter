@@ -32,8 +32,6 @@ BODY.addEventListener('click', closeMenu);
 const BTN_LEFT = document.querySelector('.arrow-left');
 const BTN_RIGHT = document.querySelector('.arrow-right');
 const CAROUSEL = document.querySelector('.carousel');
-const ITEM_LEFT = document.querySelector("#item-left");
-const ITEM_RIGHT = document.querySelector("#item-right");
 
 const petsData = [
     {
@@ -128,17 +126,16 @@ const petsData = [
 
 
 let numberCards;
-const leftItem = document.querySelector('#item-left');
-const itemActive =  document.querySelector('#item-active');
-const itemRight = document.querySelector('#itemRight');
-const carouselItems = [leftItem, itemActive, itemRight];
 
-if(window.innerWidth >= 1279){
-   numberCards = 3;
-}else if(window.innerWidth <= 767){
-    numberCards = 1;
-}else {
-    numberCards = 2;
+function checkScreenSize(){
+    if(window.innerWidth >= 1279){
+    numberCards = 3;
+    }else if(window.innerWidth <= 767){
+        numberCards = 1;
+    }else {
+        numberCards = 2;
+    }
+    return numberCards;
 }
 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
@@ -164,6 +161,8 @@ function generateArrays(firstArr, secondArr){
 //Инициализация
 
 function init(){
+    numberCards = checkScreenSize();
+    console.log(numberCards);
     let pastArr = [];
     let currArr = [];
     let nextArr = [];
@@ -180,11 +179,9 @@ function init(){
     return [pastArr, currArr, nextArr];
 }
 
-let cardsArr = init();
-console.log(cardsArr);
-
 
 function forward(pastArr, currArr, nextArr){
+    checkScreenSize();
     pastArr = [];
     pastArr = currArr.slice();
     currArr = [];
@@ -195,6 +192,7 @@ function forward(pastArr, currArr, nextArr){
 }
 
 function changeToBackward(pastArr, currArr, nextArr){
+    checkScreenSize();
     let changeArr = pastArr.slice();
     pastArr = currArr.slice();
     currArr = changeArr.slice();
@@ -204,6 +202,7 @@ function changeToBackward(pastArr, currArr, nextArr){
 }
 
 function backward(pastArr, currArr, nextArr){
+    checkScreenSize();
     nextArr = [];
     nextArr = currArr.slice();
     currArr = [];
@@ -214,6 +213,7 @@ function backward(pastArr, currArr, nextArr){
 }
 
 function changeToForward(pastArr, currArr, nextArr){
+    checkScreenSize();
     let changeArr = nextArr.slice();
     nextArr = currArr.slice();
     currArr = changeArr.slice();
@@ -254,15 +254,36 @@ function createCardTemplate(currentCardNumber){
     // const cardButton = document.createElement('button');
     // cardTitle.classList.add('card__title');
     // cardButton.classList.add('card__button');
-    console.log(card);
     return card;
 }
 
-createCardTemplate(1);
 
-function fillCarouselItems(){
-
+function fillCarouselItem(carouselItems, item, f){
+    console.log(item);
+    let cardsArr = f;
+    numberCards = checkScreenSize();
+    for(let i = 0; i < numberCards; i++){
+        console.log(cardsArr[item][i]);
+        const cardHTML = createCardTemplate(cardsArr[item][i]);
+        console.log(carouselItems[item]);
+        (carouselItems[item]).append(cardHTML);
+    }
 }
+
+function fillThreeItemsOfCarousel(f){
+    const leftItem = document.querySelector('#item-left');
+    const itemActive =  document.querySelector('#item-active');
+    const itemRight = document.querySelector('#item-right');
+    const carouselItems = [leftItem, itemActive, itemRight];
+    for(let i=0; i < carouselItems.length; i++){
+        fillCarouselItem(carouselItems, i, f);
+    }
+}
+
+fillThreeItemsOfCarousel(init());
+
+
+
 
 
 // const moveLeft = () => {
