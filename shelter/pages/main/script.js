@@ -32,6 +32,13 @@ BODY.addEventListener('click', closeMenu);
 const BTN_LEFT = document.querySelector('.arrow-left');
 const BTN_RIGHT = document.querySelector('.arrow-right');
 const CAROUSEL = document.querySelector('.carousel');
+let itemLeft = document.querySelector('#item-left');
+let itemActive =  document.querySelector('#item-active');
+let itemRight = document.querySelector('#item-right');
+let numberCards;
+let pastArr = [];
+let currArr = [];
+let nextArr = [];
 
 const petsData = [
     {
@@ -125,19 +132,20 @@ const petsData = [
   ];
 
 
-let numberCards;
-
+//Проверка на размер экрана
 function checkScreenSize(){
     if(window.innerWidth >= 1279){
-    numberCards = 3;
+        numberCards = 3;
     }else if(window.innerWidth <= 767){
         numberCards = 1;
     }else {
         numberCards = 2;
     }
+    console.log(numberCards);
     return numberCards;
 }
 
+//Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
     let randomNumber = Math.floor(Math.random() * 8);
         if(((secondArr.length === 0) && (firstArr.length === 0)) ||
@@ -151,6 +159,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
         return [firstArr, secondArr];
 }
 
+//Генерация массива уникальных чисел
 function generateArrays(firstArr, secondArr){
     for(let i = 0; i < numberCards; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
@@ -159,13 +168,11 @@ function generateArrays(firstArr, secondArr){
 }
 
 //Инициализация
-
 function init(){
     numberCards = checkScreenSize();
-    console.log(numberCards);
-    let pastArr = [];
-    let currArr = [];
-    let nextArr = [];
+    // let pastArr = [];
+    // let currArr = [];
+    // let nextArr = [];
     generateArrays(nextArr, currArr);
     currArr = nextArr.slice();
     nextArr = [];
@@ -175,12 +182,11 @@ function init(){
     currArr = nextArr.slice();
     nextArr = [];
     generateArrays(nextArr, currArr);
-    console.log(pastArr, currArr, nextArr);
     return [pastArr, currArr, nextArr];
 }
 
-
-function forward(pastArr, currArr, nextArr){
+//Формирование массивов чисел при прокуртке вперёд
+function forward(){
     checkScreenSize();
     pastArr = [];
     pastArr = currArr.slice();
@@ -191,7 +197,8 @@ function forward(pastArr, currArr, nextArr){
     return [pastArr, currArr, nextArr];
 }
 
-function changeToBackward(pastArr, currArr, nextArr){
+//Формирование массивов чисел при смене направления назад
+function changeToBackward(){
     checkScreenSize();
     let changeArr = pastArr.slice();
     pastArr = currArr.slice();
@@ -201,7 +208,8 @@ function changeToBackward(pastArr, currArr, nextArr){
     return [pastArr, currArr, nextArr];
 }
 
-function backward(pastArr, currArr, nextArr){
+//Формирование массивов чисел при прокрутке назад
+function backward(){
     checkScreenSize();
     nextArr = [];
     nextArr = currArr.slice();
@@ -212,7 +220,8 @@ function backward(pastArr, currArr, nextArr){
     return [pastArr, currArr, nextArr];
 }
 
-function changeToForward(pastArr, currArr, nextArr){
+//Формирование массивов чисел при смене направления вперёд
+function changeToForward(){
     checkScreenSize();
     let changeArr = nextArr.slice();
     nextArr = currArr.slice();
@@ -222,18 +231,7 @@ function changeToForward(pastArr, currArr, nextArr){
     return [pastArr, currArr, nextArr];
 }
 
-
-
-// let activeElementsNames = [];
-// function getActive(){
-//     let activeItem = document.querySelector('#item-active');
-//     let activeElements = activeItem.querySelectorAll('.card__title');
-//     for(let i = 0; i < activeElements.length; i++){
-//         activeElementsNames.push(activeElements[i].textContent);
-//     }
-//     return activeElementsNames;
-// }
-
+//Создание карточки питомца
 function createCardTemplate(currentCardNumber){
     const card = document.createElement('li');
     card.classList.add('card');
@@ -243,82 +241,71 @@ function createCardTemplate(currentCardNumber){
     <span class="card__title">${petsData[currentCardNumber].name}</span>
     <button class="card__button">Learn more</button>`;
     card.insertAdjacentHTML('afterbegin', contentCard);
-    // const cardPicture = document.createElement('img');
-    // cardPicture.classList.add('card__picture');
-    // cardPicture.src = `../../assets/images/${currentName}.png`;
-    // cardPicture.alt = `${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}`;
-    // cardPicture.width = '270';
-    // cardPicture.height = '270';
-    // card.append(cardPicture);
-    // const cardTitle =  document.createElement('span');
-    // const cardButton = document.createElement('button');
-    // cardTitle.classList.add('card__title');
-    // cardButton.classList.add('card__button');
     return card;
 }
 
-
-function fillCarouselItem(carouselItems, item, f){
-    console.log(item);
-    let cardsArr = f;
+//Заполнение выбранного элемента карточками
+function fillCarouselItem(carouselItem, cardsArr){
     numberCards = checkScreenSize();
     for(let i = 0; i < numberCards; i++){
-        console.log(cardsArr[item][i]);
-        const cardHTML = createCardTemplate(cardsArr[item][i]);
-        console.log(carouselItems[item]);
-        (carouselItems[item]).append(cardHTML);
+        const cardHTML = createCardTemplate(cardsArr[i]);
+        (carouselItem).append(cardHTML);
     }
+    return carouselItem;
 }
 
+//Заполнение массива элементов слайдера карточками
 function fillThreeItemsOfCarousel(f){
-    const leftItem = document.querySelector('#item-left');
-    const itemActive =  document.querySelector('#item-active');
-    const itemRight = document.querySelector('#item-right');
-    const carouselItems = [leftItem, itemActive, itemRight];
+    carouselItems = [itemLeft, itemActive, itemRight];
+    let cardsArrays = f;
+    console.log(cardsArrays);
     for(let i=0; i < carouselItems.length; i++){
-        fillCarouselItem(carouselItems, i, f);
+        fillCarouselItem(carouselItems[i], cardsArrays[i]);
     }
+    return [itemLeft, itemActive, itemRight];
 }
 
 fillThreeItemsOfCarousel(init());
 
+console.log(pastArr, currArr, nextArr);
 
 
+const moveLeft = () => {
+  CAROUSEL.classList.add('transition-left'); 
+  BTN_LEFT.removeEventListener('click', moveLeft);
+  BTN_RIGHT.removeEventListener('click', moveRight);
+}
+
+const moveRight = () => {
+    console.log(pastArr, currArr, nextArr);
+    CAROUSEL.classList.add('transition-right');
+    BTN_RIGHT.removeEventListener('click', moveRight);
+    BTN_LEFT.removeEventListener('click', moveLeft);
+  }
+
+BTN_LEFT.addEventListener('click', moveLeft);
+BTN_RIGHT.addEventListener('click', moveRight);
 
 
-// const moveLeft = () => {
-//   CAROUSEL.classList.add('transition-left'); 
-//   BTN_LEFT.removeEventListener('click', moveLeft);
-//   BTN_RIGHT.removeEventListener('click', moveRight);
-// }
+//На время анимации прокрутки снимаем слушатель с кнопок и 
+//перерисовываем все карточки по окончанию прокрутки 
+//не забываем в конце снова повесить слушатель на кнопки
+CAROUSEL.addEventListener('animationend', (animationEvent) => {
+    if (animationEvent.animationName === "move-left") {
+        CAROUSEL.classList.remove("transition-left");
+        itemRight.innerHTML = ``;
+        itemActive.innerHTML = ``;
+        itemLeft.innerHTML = ``;
+        fillThreeItemsOfCarousel(backward());
+    } else {
+        CAROUSEL.classList.remove("transition-right");
+        itemRight.innerHTML = ``;
+        itemActive.innerHTML = ``;
+        itemLeft.innerHTML = ``;
+        fillThreeItemsOfCarousel(forward());
+    }
 
-// const moveRight = () => {
-//     CAROUSEL.classList.add('transition-right');
-//     BTN_RIGHT.removeEventListener('click', moveRight);
-//     BTN_LEFT.removeEventListener('click', moveLeft);
-//   }
-
-// BTN_LEFT.addEventListener('click', moveLeft);
-// BTN_RIGHT.addEventListener('click', moveRight);
-
-// CAROUSEL.addEventListener('animationend', (animationEvent) => {
-//     let changedItem;
-//     if (animationEvent.animationName === "move-left") {
-//         CAROUSEL.classList.remove("transition-left");
-//         changedItem = ITEM_LEFT;
-//         document.querySelector("#item-active").innerHTML = ITEM_LEFT.innerHTML;
-//     } else {
-//         CAROUSEL.classList.remove("transition-right");
-//         changedItem = ITEM_RIGHT;
-//         document.querySelector("#item-active").innerHTML = ITEM_RIGHT.innerHTML;
-//     }
-
-//     changedItem.innerHTML = "";
-//     for (let i = 0; i < 3; i++) {
-//         changedItem.append(createCardTemplate()); 
-//     }
-
-//     BTN_LEFT.addEventListener('click', moveLeft);
-//     BTN_RIGHT.addEventListener('click', moveRight);
-// } )
+    BTN_LEFT.addEventListener('click', moveLeft);
+    BTN_RIGHT.addEventListener('click', moveRight);
+});
 

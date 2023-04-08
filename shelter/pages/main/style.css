@@ -598,13 +598,13 @@ p {
     }
 
 .carousel-wrapper {
-        width: 1200px;
+        width: 990px;
         overflow: hidden;
 }
 
  @media (max-width: 1279px) {
     .carousel-wrapper {
-        width: 580px;
+        width: 600px;
         top: 10px;
     }
  }
@@ -627,14 +627,43 @@ p {
     display: flex;
     position: relative;
     width: 100%;
+    gap: 90px;
     flex-shrink: 0;
-    left: -990px; 
+    left: -1080px; 
 } 
 
+    @media (max-width: 1279px){
+        .carousel {
+            left: -620px;
+            gap: 40px;
+        }
+    }
+
+    @media (max-width: 767px){
+        .carousel {
+            left: -310px;
+            gap: 40px;
+        }
+    }
+
 @keyframes move-right {
-    from {left: -990px;}
-    to {left: -1980px;}
+    from {left: -1080px;}
+    to {left: -2160px;}
 }
+
+    @media (max-width: 1279px) {
+        @keyframes move-right {
+            from {left: -620px;}
+            to {left: -1240px;}
+        }
+    }
+
+    @media (max-width: 767px) {
+        @keyframes move-right {
+            from {left: -310px;}
+            to {left: -620px;}
+        }
+    }
 
 .transition-right {
     animation-name: move-right;
@@ -642,9 +671,23 @@ p {
 }
 
 @keyframes move-left {
-    from {left: -990px;}
+    from {left: -1080px;}
     to {left: 0px;}
 }
+
+    @media (max-width: 1279px) {
+        @keyframes move-left {
+            from {left: -620px;}
+            to {left: 0px;}
+        }
+    }
+
+    @media (max-width: 767px) {
+        @keyframes move-left {
+            from {left: -310px;}
+            to {left: 0px;}
+        }
+    }
 
 .transition-left {
     animation-name: move-left;
@@ -680,7 +723,7 @@ p {
     transition: 0.5s;
 }
 
-    @media (max-width: 1279px) {
+    /* @media (max-width: 1279px) {
         .card:last-child {
             display: none;
         }
@@ -690,7 +733,7 @@ p {
         .card:nth-of-type(n+2) {
             display: none;
         }
-    }
+    } */
 
 
 .card:hover {
