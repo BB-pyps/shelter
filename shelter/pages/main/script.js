@@ -39,6 +39,11 @@ let numberCards;
 let pastArr = [];
 let currArr = [];
 let nextArr = [];
+let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
+// let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
+const POPUP = document.querySelector('.popup');
+const POPUP__CLOSE__BUTTON = document.querySelector('.popup__close');
+
 
 const petsData = [
     {
@@ -235,7 +240,8 @@ function changeToForward(){
 function createCardTemplate(currentCardNumber){
     const card = document.createElement('li');
     card.classList.add('card');
-    const contentCard = `<img src="../../assets/images/${petsData[currentCardNumber].name.toLowerCase()}.png" 
+    card.dataset.id = currentCardNumber;
+    const contentCard = `<img src="${petsData[currentCardNumber].img}" 
     class="card__picture" alt="${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}"
     width="270" height="270">
     <span class="card__title">${petsData[currentCardNumber].name}</span>
@@ -262,6 +268,7 @@ function fillThreeItemsOfCarousel(f){
     for(let i=0; i < carouselItems.length; i++){
         fillCarouselItem(carouselItems[i], cardsArrays[i]);
     }
+    ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
     return [itemLeft, itemActive, itemRight];
 }
 
@@ -307,5 +314,64 @@ CAROUSEL.addEventListener('animationend', (animationEvent) => {
 
     BTN_LEFT.addEventListener('click', moveLeft);
     BTN_RIGHT.addEventListener('click', moveRight);
+});
+
+
+
+//ПОПAП
+
+
+function generatePopup(cardDataId){
+    let contentPopup = `<div class="popup__body">
+    <div class="popup__content">
+        <button class="popup__close">
+            <img src="../../assets/icons/icon-cross.svg" alt="close popup button" class="popup__close-img">
+        </button>
+        <div class="popup__image">
+            <img src="${petsData[cardDataId].img}" alt="${petsData[cardDataId].type} ${petsData[cardDataId].name}" class="popup__image-picture">
+        </div>
+        <div class="popup__text">
+                <div class="popup__text-title">${petsData[cardDataId].name}</div>
+                <div class="popup__text-subtitle">${petsData[cardDataId].type} - ${petsData[cardDataId].breed}</div>
+                <div class="popup__text-description">${petsData[cardDataId].description}</div>
+                <ul class="popup__text-list">
+                    <li class="popup__text-list-element"><span class="list-elem__bold">Age:</span>${petsData[cardDataId].age}</li>
+                    <li class="popup__text-list-element"><span class="list-elem__bold">Inoculations:</span>${petsData[cardDataId].inoculations}</li>
+                    <li class="popup__text-list-element"><span class="list-elem__bold">Diseases:</span>${petsData[cardDataId].diseases}</li>
+                    <li class="popup__text-list-element"><span class="list-elem__bold">Parasites:</span>${petsData[cardDataId].parasites}</li>
+                </ul>
+        </div>
+    </div>
+</div>`;
+    POPUP.insertAdjacentHTML('afterbegin', contentPopup);
+}
+
+function closePopup(){
+    POPUP.classList.remove('show-popup');
+    BODY.classList.remove('hidden');
+    POPUP.innerHTML = ``;
+}
+
+
+ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
+    let cardDataId;
+    if(event.target.classList.contains('card')){
+        cardDataId = event.target.dataset.id;
+    }else if(event.target.classList.contains('card__button') ||
+             event.target.classList.contains('card__title') ||
+             event.target.classList.contains('card__picture')){
+        cardDataId = event.target.closest('li').dataset.id;
+    }
+    generatePopup(cardDataId);
+    POPUP.classList.add('show-popup');
+    BODY.classList.add('hidden');
+});
+
+POPUP.addEventListener('click', (event) => {
+    if(event.target.classList.contains('popup__close-img') || 
+       event.target.classList.contains('popup__body')){
+        console.log('Hello');
+        closePopup();
+       }
 });
 

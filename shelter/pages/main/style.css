@@ -1342,7 +1342,7 @@ p {
 }
 
 .hidden {
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .overlay::before {
@@ -1360,7 +1360,10 @@ p {
     height: 100%;
 }
 
+/*----Popup----*/
+
 .popup {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1465,4 +1468,8 @@ p {
 .list-elem__bold {
     font-weight: 900;
     letter-spacing: 2px;
+}
+
+.show-popup {
+    display: block;
 }
