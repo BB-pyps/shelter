@@ -1342,7 +1342,7 @@ p {
 }
 
 .hidden {
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 .overlay::before {

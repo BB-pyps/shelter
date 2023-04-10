@@ -6,20 +6,21 @@ const HAMBURGER = document.querySelector('.hamburger-container');
 const MENU = document.querySelector('.navigation');
 const NAV_LINKS = document.querySelectorAll('.navigation__element__link');
 const BODY = document.querySelector('.body');
+const HTML = document.querySelector('html');
 
 HAMBURGER.addEventListener('click', function(){
     HAMBURGER.classList.toggle('active-hamburger');
     MENU.classList.toggle('open');
-    BODY.classList.toggle('hidden');
     BODY.classList.toggle('overlay');
+    HTML.classList.toggle('hidden');
 })
 
 function closeMenu(event) {
     if (event.target.classList.contains('navigation__element__link') || event.target.classList.contains('overlay')) {
         HAMBURGER.classList.remove('active-hamburger');
         MENU.classList.remove('open');
-        BODY.classList.remove('hidden');
         BODY.classList.remove('overlay');
+        HTML.classList.remove('hidden');
     }
 }
 
@@ -348,7 +349,7 @@ function generatePopup(cardDataId){
 
 function closePopup(){
     POPUP.classList.remove('show-popup');
-    BODY.classList.remove('hidden');
+    HTML.classList.remove('hidden');
     POPUP.innerHTML = ``;
 }
 
@@ -364,7 +365,7 @@ ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
     }
     generatePopup(cardDataId);
     POPUP.classList.add('show-popup');
-    BODY.classList.add('hidden');
+    HTML.classList.add('hidden');
 });
 
 POPUP.addEventListener('click', (event) => {
