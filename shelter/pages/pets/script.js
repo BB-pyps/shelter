@@ -1,21 +1,24 @@
-const hamburger = document.querySelector('.hamburger-container');
-const menu = document.querySelector('.navigation');
-const navLinks = document.querySelectorAll('.navigation__element__link');
-const header = document.querySelector('.header');
-const body = document.querySelector('.body');
+const HAMBURGER = document.querySelector('.hamburger-container');
+const MENU = document.querySelector('.navigation');
+const NAV_LINKS = document.querySelectorAll('.navigation__element__link');
+const BODY = document.querySelector('.body');
 
-hamburger.addEventListener('click', function(){
-    hamburger.classList.toggle('active-hamburger');
-    menu.classList.toggle('open');
-    body.classList.toggle('hidden');
+
+HAMBURGER.addEventListener('click', function(){
+    HAMBURGER.classList.toggle('active-hamburger');
+    MENU.classList.toggle('open');
+    BODY.classList.toggle('hidden');
+    BODY.classList.toggle('overlay');
 })
 
 function closeMenu(event) {
-    if (event.target.classList.contains('navigation__element__link')) {
-        hamburger.classList.remove('active-hamburger');
-        menu.classList.remove('open');
-        body.classList.remove('hidden');
+    if (event.target.classList.contains('navigation__element__link') || event.target.classList.contains('overlay')) {
+        HAMBURGER.classList.remove('active-hamburger');
+        MENU.classList.remove('open');
+        BODY.classList.remove('hidden');
+        BODY.classList.remove('overlay');
     }
 }
 
-navLinks.forEach((el) => el.addEventListener('click', closeMenu));
+NAV_LINKS.forEach((el) => el.addEventListener('click', closeMenu));
+BODY.addEventListener('click', closeMenu);
