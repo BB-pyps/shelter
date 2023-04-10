@@ -41,8 +41,8 @@ let currArr = [];
 let nextArr = [];
 let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
 // let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
-const POPUP = document.querySelector('.popup');
-const POPUP__CLOSE__BUTTON = document.querySelector('.popup__close');
+let POPUP = document.querySelector('.popup');
+let POPUP__CLOSE__BUTTON = document.querySelector('.popup__close');
 
 
 const petsData = [
@@ -141,7 +141,7 @@ const petsData = [
 function checkScreenSize(){
     if(window.innerWidth >= 1279){
         numberCards = 3;
-    }else if(window.innerWidth <= 767){
+    }else if(window.innerWidth <= 766){
         numberCards = 1;
     }else {
         numberCards = 2;
@@ -368,10 +368,12 @@ ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
 });
 
 POPUP.addEventListener('click', (event) => {
-    if(event.target.classList.contains('popup__close-img') || 
-       event.target.classList.contains('popup__body')){
-        console.log('Hello');
+    if(event.target.classList.contains('popup') || 
+    event.target.classList.contains('popup__body') || 
+    event.target.classList.contains('popup__close-img') || 
+    event.target.classList.contains('popup__close')){
         closePopup();
        }
-});
+    });
+//сделать анимацию для закрытия попапа
 
