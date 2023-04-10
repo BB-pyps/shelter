@@ -43,7 +43,6 @@ let nextArr = [];
 let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
 // let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
 let POPUP = document.querySelector('.popup');
-let POPUP__CLOSE__BUTTON = document.querySelector('.popup__close');
 
 
 const petsData = [
@@ -275,9 +274,6 @@ function fillThreeItemsOfCarousel(f){
 
 fillThreeItemsOfCarousel(init());
 
-console.log(pastArr, currArr, nextArr);
-
-
 const moveLeft = () => {
   CAROUSEL.classList.add('transition-left'); 
   BTN_LEFT.removeEventListener('click', moveLeft);
@@ -298,6 +294,7 @@ BTN_RIGHT.addEventListener('click', moveRight);
 //На время анимации прокрутки снимаем слушатель с кнопок и 
 //перерисовываем все карточки по окончанию прокрутки 
 //не забываем в конце снова повесить слушатель на кнопки
+
 CAROUSEL.addEventListener('animationend', (animationEvent) => {
     if (animationEvent.animationName === "move-left") {
         CAROUSEL.classList.remove("transition-left");
@@ -318,9 +315,8 @@ CAROUSEL.addEventListener('animationend', (animationEvent) => {
 });
 
 
-
 //ПОПAП
-
+let POPUP__CLOSE__BUTTON;
 
 function generatePopup(cardDataId){
     let contentPopup = `<div class="popup__body">
@@ -350,6 +346,7 @@ function generatePopup(cardDataId){
 function closePopup(){
     POPUP.classList.remove('show-popup');
     HTML.classList.remove('hidden');
+    POPUP__CLOSE__BUTTON.classList.remove('animation-popup');
     POPUP.innerHTML = ``;
 }
 
@@ -366,6 +363,7 @@ ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
     generatePopup(cardDataId);
     POPUP.classList.add('show-popup');
     HTML.classList.add('hidden');
+    POPUP__CLOSE__BUTTON = document.querySelector('.popup__close');
 });
 
 POPUP.addEventListener('click', (event) => {
@@ -373,7 +371,10 @@ POPUP.addEventListener('click', (event) => {
     event.target.classList.contains('popup__body') || 
     event.target.classList.contains('popup__close-img') || 
     event.target.classList.contains('popup__close')){
-        closePopup();
+        POPUP__CLOSE__BUTTON.classList.add('animation-popup');
+        setTimeout(() => {
+            closePopup();
+        }, 500);
        }
     });
 //сделать анимацию для закрытия попапа

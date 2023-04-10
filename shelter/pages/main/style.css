@@ -1409,7 +1409,7 @@ p {
     right: -42px;
     top: -52px;
     transition: all;
-    transition-duration: 1s;
+    transition-duration: 0.5s;
 }
 
     @media (max-width: 767px) {
@@ -1427,8 +1427,10 @@ p {
     transition-duration: 0.5s;
 }
 
-.popup__close-animation {
-    transform: scale(1.5);
+.animation-popup {
+    transform: rotate(0.5turn);
+    transition: all;
+    transition-duration: 0.5s;
 }
 
 .popup__image {
