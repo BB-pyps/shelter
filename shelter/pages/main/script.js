@@ -138,17 +138,17 @@ const petsData = [
 
 
 //Проверка на размер экрана
-function checkScreenSize(){
-    if(window.innerWidth >= 1279){
-        numberCards = 3;
-    }else if(window.innerWidth <= 766){
-        numberCards = 1;
-    }else {
-        numberCards = 2;
-    }
-    console.log(numberCards);
-    return numberCards;
-}
+// function checkScreenSize(){
+//     if(window.innerWidth >= 1279){
+//         numberCards = 3;
+//     }else if(window.innerWidth <= 766){
+//         numberCards = 1;
+//     }else {
+//         numberCards = 2;
+//     }
+//     console.log(numberCards);
+//     return numberCards;
+// }
 
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
@@ -166,7 +166,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 
 //Генерация массива уникальных чисел
 function generateArrays(firstArr, secondArr){
-    for(let i = 0; i < numberCards; i++){
+    for(let i = 0; i < 3/*numberCards*/; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
      return [firstArr, secondArr];
@@ -174,7 +174,7 @@ function generateArrays(firstArr, secondArr){
 
 //Инициализация
 function init(){
-    numberCards = checkScreenSize();
+    // numberCards = checkScreenSize();
     // let pastArr = [];
     // let currArr = [];
     // let nextArr = [];
@@ -192,7 +192,7 @@ function init(){
 
 //Формирование массивов чисел при прокуртке вперёд
 function forward(){
-    checkScreenSize();
+    // checkScreenSize();
     pastArr = [];
     pastArr = currArr.slice();
     currArr = [];
@@ -204,7 +204,7 @@ function forward(){
 
 //Формирование массивов чисел при смене направления назад
 function changeToBackward(){
-    checkScreenSize();
+    // checkScreenSize();
     let changeArr = pastArr.slice();
     pastArr = currArr.slice();
     currArr = changeArr.slice();
@@ -215,7 +215,7 @@ function changeToBackward(){
 
 //Формирование массивов чисел при прокрутке назад
 function backward(){
-    checkScreenSize();
+    // checkScreenSize();
     nextArr = [];
     nextArr = currArr.slice();
     currArr = [];
@@ -227,7 +227,7 @@ function backward(){
 
 //Формирование массивов чисел при смене направления вперёд
 function changeToForward(){
-    checkScreenSize();
+    // checkScreenSize();
     let changeArr = nextArr.slice();
     nextArr = currArr.slice();
     currArr = changeArr.slice();
@@ -252,8 +252,8 @@ function createCardTemplate(currentCardNumber){
 
 //Заполнение выбранного элемента карточками
 function fillCarouselItem(carouselItem, cardsArr){
-    numberCards = checkScreenSize();
-    for(let i = 0; i < numberCards; i++){
+    // numberCards = checkScreenSize();
+    for(let i = 0; i < 3/*numberCards*/; i++){
         const cardHTML = createCardTemplate(cardsArr[i]);
         (carouselItem).append(cardHTML);
     }
