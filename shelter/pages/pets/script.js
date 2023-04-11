@@ -117,6 +117,30 @@ const petsData = [
   ];
 
 const CARDS_CONTAINER = document.querySelector('.cards-container');
+let randomArr = [];
+
+
+function generateRandomNumber(randomArr){
+    let randomNumber = Math.floor(Math.random() * 8);
+    if(randomArr.length === 0 || (randomArr.length !== 0 && !randomArr.includes(randomNumber))){
+        randomArr.push(randomNumber);
+    }else{
+        generateRandomNumber(randomArr);
+    }
+}
+
+function generateArray(randomArr){
+    for(let i=0; i < 8; i++){
+        generateRandomNumber(randomArr);
+    }
+}
+
+function shuffleArr(randomArr){
+    randomArr.sort(() => 0.5 - Math.random());
+}
+
+generateArray(randomArr);
+shuffleArr(randomArr);
 
 
 function createCardTemplate(currentCardNumber){
