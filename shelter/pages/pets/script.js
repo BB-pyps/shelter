@@ -133,14 +133,69 @@ function generateArray(randomArr){
     for(let i=0; i < 8; i++){
         generateRandomNumber(randomArr);
     }
+    return randomArr;
 }
 
-function shuffleArr(randomArr){
-    randomArr.sort(() => 0.5 - Math.random());
+function sliceIntoChunks(arr, chunkSize){
+    let chunksArr = [];
+    for(let i=0; i < arr.length; i+=chunkSize){
+        let chunk = arr.slice(i, i + chunkSize);
+        chunksArr.push(chunk);
+    }
+    return chunksArr;
 }
 
-generateArray(randomArr);
-shuffleArr(randomArr);
+function shuffleArr(arr){
+    console.log(arr);
+    const shuffledArr = arr.map((item) => {
+        const newItem = [...item];
+        newItem.sort(() => Math.random() - 0.5);
+        return newItem;
+      });
+      console.log(shuffledArr);
+      return shuffledArr;
+}
+
+function removeChunks(arr){
+    const arrAfterRemoveChunks = [];
+    for(let i=0; i < arr.length; i++){
+        for(let j=0; j < arr[i].length; j++){
+            arrAfterRemoveChunks.push(arr[i][j]);
+        }
+    }
+    return arrAfterRemoveChunks;
+}
+
+function pushInArrOfCards(arr, finalArr){
+    for(let i=0; i < arr.length; i++){
+        finalArr.push(arr[i]);
+    }
+}
+
+function finalAssemblyOfArr(){
+    const finalArr = [];
+    generateArray(randomArr);
+    const arrOfChunks = sliceIntoChunks(randomArr, 3);
+    for(let i = 0; i < 6; i++){
+        const shuffledArr = shuffleArr(arrOfChunks);
+        const shuffledArrAfterRemoveChunks = removeChunks(shuffledArr);
+        pushInArrOfCards(shuffledArrAfterRemoveChunks, finalArr);
+    }
+    return finalArr;
+}
+
+const arrOfCards = finalAssemblyOfArr();
+console.log(arrOfCards);
+
+
+
+
+
+
+
+
+
+
 
 
 function createCardTemplate(currentCardNumber){
