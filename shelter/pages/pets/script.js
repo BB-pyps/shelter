@@ -117,6 +117,211 @@ const petsData = [
   ];
 
 const CARDS_CONTAINER = document.querySelector('.cards-container');
+const PAGINATION_BUTTON_FIRST = document.querySelector('.pagination-button__first');
+const PAGINATION_BUTTON_LEFT = document.querySelector('.pagination-button__left');
+const PAGINATION_BUTTON_CURR = document.querySelector('.pagination-button__current');
+const PAGINATION_BUTTON_RIGHT = document.querySelector('.pagination-button__right');
+const PAGINATION_BUTTON_LAST = document.querySelector('.pagination-button__last');
+let randomArr = [];
+
+
+function generateRandomNumber(randomArr){
+    let randomNumber = Math.floor(Math.random() * 8);
+    if(randomArr.length === 0 || (randomArr.length !== 0 && !randomArr.includes(randomNumber))){
+        randomArr.push(randomNumber);
+    }else{
+        generateRandomNumber(randomArr);
+    }
+}
+
+function generateArray(randomArr){
+    for(let i=0; i < 8; i++){
+        generateRandomNumber(randomArr);
+    }
+    return randomArr;
+}
+
+function sliceIntoChunks(arr, chunkSize){
+    let chunksArr = [];
+    for(let i=0; i < arr.length; i+=chunkSize){
+        let chunk = arr.slice(i, i + chunkSize);
+        chunksArr.push(chunk);
+    }
+    return chunksArr;
+}
+
+function shuffleArr(arr){
+    console.log(arr);
+    const shuffledArr = arr.map((item) => {
+        const newItem = [...item];
+        newItem.sort(() => Math.random() - 0.5);
+        return newItem;
+      });
+      console.log(shuffledArr);
+      return shuffledArr;
+}
+
+function removeChunks(arr){
+    const arrAfterRemoveChunks = [];
+    for(let i=0; i < arr.length; i++){
+        for(let j=0; j < arr[i].length; j++){
+            arrAfterRemoveChunks.push(arr[i][j]);
+        }
+    }
+    return arrAfterRemoveChunks;
+}
+
+function pushInArrOfCards(arr, finalArr){
+    for(let i=0; i < arr.length; i++){
+        finalArr.push(arr[i]);
+    }
+}
+
+function finalAssemblyOfArr(){
+    const finalArr = [];
+    generateArray(randomArr);
+    const arrOfChunks = sliceIntoChunks(randomArr, 3);
+    for(let i = 0; i < 6; i++){
+        const shuffledArr = shuffleArr(arrOfChunks);
+        const shuffledArrAfterRemoveChunks = removeChunks(shuffledArr);
+        pushInArrOfCards(shuffledArrAfterRemoveChunks, finalArr);
+    }
+    return finalArr;
+}
+
+const arrOfCards = finalAssemblyOfArr();
+console.log(arrOfCards);
+let notesOnPage;
+
+//Проверка на размер экрана
+function checkScreenSize(notesOnPage, ...args){
+    if(window.innerWidth >= 1279){
+        notesOnPage = 8;
+        lastPage = 6;
+    }else if(window.innerWidth <= 609){
+        notesOnPage  = 3;
+        lastPage = 16;
+    }else {
+        notesOnPage  = 6;
+        lastPage = 8;
+    }
+    return [notesOnPage, lastPage];
+}
+
+function showFirstPage(arrOfCards){
+    [notesOnPage] = checkScreenSize(notesOnPage);
+    let pageNum = 1;
+    let start = (pageNum - 1) * notesOnPage;
+    let end = start + notesOnPage;
+    let notes = arrOfCards.slice(start, end);
+    CARDS_CONTAINER.innerHTML = ``;
+    for(let i=0; i < notes.length; i++){
+        CARDS_CONTAINER.append(createCardTemplate(notes[i]));
+    }
+    PAGINATION_BUTTON_FIRST.classList.add('pagination-button_disabled');
+    PAGINATION_BUTTON_LEFT.classList.add('pagination-button_disabled');
+    PAGINATION_BUTTON_FIRST.setAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_LEFT.setAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_CURR.innerHTML = `1`;
+    PAGINATION_BUTTON_LAST.classList.remove('pagination-button_disabled');
+    PAGINATION_BUTTON_RIGHT.classList.remove('pagination-button_disabled');
+    PAGINATION_BUTTON_LAST.removeAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_RIGHT.removeAttribute("disabled", "disabled");
+}
+
+showFirstPage(arrOfCards);
+
+
+function showLastPage(arrOfCards){
+    let lastPage;
+    [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
+    // let start = (pageNum - 1) * notesOnPage;
+    // let end = start + notesOnPage;
+    let notes = arrOfCards.slice(-notesOnPage);
+    CARDS_CONTAINER.innerHTML = ``;
+    for(let i=0; i < notes.length; i++){
+        CARDS_CONTAINER.append(createCardTemplate(notes[i]));
+    }
+    PAGINATION_BUTTON_LAST.classList.add('pagination-button_disabled');
+    PAGINATION_BUTTON_RIGHT.classList.add('pagination-button_disabled');
+    PAGINATION_BUTTON_LAST.setAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_RIGHT.setAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_CURR.innerHTML = `${lastPage}`;
+    PAGINATION_BUTTON_FIRST.classList.remove('pagination-button_disabled');
+    PAGINATION_BUTTON_LEFT.classList.remove('pagination-button_disabled');
+    PAGINATION_BUTTON_FIRST.removeAttribute("disabled", "disabled");
+    PAGINATION_BUTTON_LEFT.removeAttribute("disabled", "disabled");
+}
+
+function showNextPage(arrOfCards){
+    let lastPage;
+    [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
+    let pageNum =  +PAGINATION_BUTTON_CURR.textContent;
+    if(pageNum === 1){
+        PAGINATION_BUTTON_FIRST.classList.remove('pagination-button_disabled');
+        PAGINATION_BUTTON_LEFT.classList.remove('pagination-button_disabled');
+        PAGINATION_BUTTON_FIRST.removeAttribute("disabled", "disabled");
+        PAGINATION_BUTTON_LEFT.removeAttribute("disabled", "disabled");
+    }
+    if(pageNum < lastPage){
+        let start = pageNum * notesOnPage;
+        let end = start + notesOnPage;
+        let notes = arrOfCards.slice(start, end);
+        console.log(notes);
+        CARDS_CONTAINER.innerHTML = ``;
+        for(let i=0; i < notes.length; i++){
+            CARDS_CONTAINER.append(createCardTemplate(notes[i]));
+        }
+        if(pageNum < lastPage){
+            PAGINATION_BUTTON_CURR.innerHTML = `${pageNum + 1}`;
+        }
+        pageNum =  +PAGINATION_BUTTON_CURR.textContent;
+        if(pageNum === lastPage){
+            PAGINATION_BUTTON_LAST.classList.add('pagination-button_disabled');
+            PAGINATION_BUTTON_RIGHT.classList.add('pagination-button_disabled');
+            PAGINATION_BUTTON_LAST.setAttribute("disabled", "disabled");
+            PAGINATION_BUTTON_RIGHT.setAttribute("disabled", "disabled");
+        }
+    }
+}
+
+ function showPrevPage(arrOfCards){
+     let lastPage;
+     [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
+     let pageNum =  +PAGINATION_BUTTON_CURR.textContent;
+     if(pageNum === lastPage){
+        PAGINATION_BUTTON_LAST.classList.remove('pagination-button_disabled');
+        PAGINATION_BUTTON_RIGHT.classList.remove('pagination-button_disabled');
+        PAGINATION_BUTTON_LAST.removeAttribute("disabled", "disabled");
+        PAGINATION_BUTTON_RIGHT.removeAttribute("disabled", "disabled");
+     }
+     if(pageNum > 1){
+         let start = (pageNum - 2) * notesOnPage;
+         let end = start + notesOnPage;
+         let notes = arrOfCards.slice(start, end);
+         console.log(notes);
+         CARDS_CONTAINER.innerHTML = ``;
+         for(let i=0; i < notes.length; i++){
+             CARDS_CONTAINER.append(createCardTemplate(notes[i]));
+         }
+         if(pageNum > 1){
+             PAGINATION_BUTTON_CURR.innerHTML = `${pageNum - 1}`;
+         }
+         pageNum =  +PAGINATION_BUTTON_CURR.textContent;
+         if(pageNum === 1){
+              PAGINATION_BUTTON_FIRST.classList.add('pagination-button_disabled');
+                PAGINATION_BUTTON_LEFT.classList.add('pagination-button_disabled');
+                PAGINATION_BUTTON_FIRST.setAttribute("disabled", "disabled");
+                PAGINATION_BUTTON_LEFT.setAttribute("disabled", "disabled");
+         }
+     }
+}
+
+
+PAGINATION_BUTTON_FIRST.addEventListener('click', () => showFirstPage(arrOfCards));
+PAGINATION_BUTTON_LAST.addEventListener('click', () => showLastPage(arrOfCards));
+PAGINATION_BUTTON_RIGHT.addEventListener('click', () => showNextPage(arrOfCards));
+PAGINATION_BUTTON_LEFT.addEventListener('click', () => showPrevPage(arrOfCards));
 
 
 function createCardTemplate(currentCardNumber){
@@ -132,13 +337,6 @@ function createCardTemplate(currentCardNumber){
     return card;
 }
 
-function fillCardsContainer(){
-    for(let i=0; i < petsData.length; i++){
-        CARDS_CONTAINER.append(createCardTemplate(i));
-    }
-}
-
-fillCardsContainer();
 
 let POPUP = document.querySelector('.popup');
 let POPUP__CLOSE__BUTTON;
