@@ -123,6 +123,9 @@ const PAGINATION_BUTTON_CURR = document.querySelector('.pagination-button__curre
 const PAGINATION_BUTTON_RIGHT = document.querySelector('.pagination-button__right');
 const PAGINATION_BUTTON_LAST = document.querySelector('.pagination-button__last');
 let randomArr = [];
+const firstPaginationButtons = document.querySelectorAll('.pagination-button__inactive-first');
+const lastPaginationButtons = document.querySelectorAll('.pagination-button__inactive-last');
+
 
 
 function generateRandomNumber(randomArr){
@@ -142,9 +145,9 @@ function generateArray(randomArr){
 }
 
 function sliceIntoChunks(arr, chunkSize){
-    let chunksArr = [];
+    const chunksArr = [];
     for(let i=0; i < arr.length; i+=chunkSize){
-        let chunk = arr.slice(i, i + chunkSize);
+        const chunk = arr.slice(i, i + chunkSize);
         chunksArr.push(chunk);
     }
     return chunksArr;
@@ -208,6 +211,33 @@ function checkScreenSize(notesOnPage, ...args){
     return [notesOnPage, lastPage];
 }
 
+function createCardTemplate(currentCardNumber){
+    const card = document.createElement('li');
+    card.classList.add('card');
+    card.dataset.id = currentCardNumber;
+    const contentCard = `<img src="${petsData[currentCardNumber].img}" 
+    class="card__picture" alt="${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}"
+    width="270" height="270">
+    <span class="card__title">${petsData[currentCardNumber].name}</span>
+    <button class="card__button">Learn more</button>`;
+    card.insertAdjacentHTML('afterbegin', contentCard);
+    return card;
+}
+
+function addClassAndAtribute(arrFirst){
+    arrFirst.forEach((item) => {
+        item.classList.add('pagination-button_disabled');
+        item.setAttribute("disabled", "disabled");
+    });
+}
+
+function removeClassAndAtribute(arrLast){
+    arrLast.forEach((item) => {
+        item.classList.remove('pagination-button_disabled');
+        item.removeAttribute("disabled", "disabled");
+    });
+}
+
 function showFirstPage(arrOfCards){
     [notesOnPage] = checkScreenSize(notesOnPage);
     let pageNum = 1;
@@ -218,15 +248,9 @@ function showFirstPage(arrOfCards){
     for(let i=0; i < notes.length; i++){
         CARDS_CONTAINER.append(createCardTemplate(notes[i]));
     }
-    PAGINATION_BUTTON_FIRST.classList.add('pagination-button_disabled');
-    PAGINATION_BUTTON_LEFT.classList.add('pagination-button_disabled');
-    PAGINATION_BUTTON_FIRST.setAttribute("disabled", "disabled");
-    PAGINATION_BUTTON_LEFT.setAttribute("disabled", "disabled");
+    addClassAndAtribute(firstPaginationButtons);
     PAGINATION_BUTTON_CURR.innerHTML = `1`;
-    PAGINATION_BUTTON_LAST.classList.remove('pagination-button_disabled');
-    PAGINATION_BUTTON_RIGHT.classList.remove('pagination-button_disabled');
-    PAGINATION_BUTTON_LAST.removeAttribute("disabled", "disabled");
-    PAGINATION_BUTTON_RIGHT.removeAttribute("disabled", "disabled");
+    removeClassAndAtribute(lastPaginationButtons);
 }
 
 showFirstPage(arrOfCards);
@@ -235,22 +259,14 @@ showFirstPage(arrOfCards);
 function showLastPage(arrOfCards){
     let lastPage;
     [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
-    // let start = (pageNum - 1) * notesOnPage;
-    // let end = start + notesOnPage;
     let notes = arrOfCards.slice(-notesOnPage);
     CARDS_CONTAINER.innerHTML = ``;
     for(let i=0; i < notes.length; i++){
         CARDS_CONTAINER.append(createCardTemplate(notes[i]));
     }
-    PAGINATION_BUTTON_LAST.classList.add('pagination-button_disabled');
-    PAGINATION_BUTTON_RIGHT.classList.add('pagination-button_disabled');
-    PAGINATION_BUTTON_LAST.setAttribute("disabled", "disabled");
-    PAGINATION_BUTTON_RIGHT.setAttribute("disabled", "disabled");
+    addClassAndAtribute(lastPaginationButtons);
     PAGINATION_BUTTON_CURR.innerHTML = `${lastPage}`;
-    PAGINATION_BUTTON_FIRST.classList.remove('pagination-button_disabled');
-    PAGINATION_BUTTON_LEFT.classList.remove('pagination-button_disabled');
-    PAGINATION_BUTTON_FIRST.removeAttribute("disabled", "disabled");
-    PAGINATION_BUTTON_LEFT.removeAttribute("disabled", "disabled");
+    removeClassAndAtribute(firstPaginationButtons);
 }
 
 function showNextPage(arrOfCards){
@@ -258,10 +274,7 @@ function showNextPage(arrOfCards){
     [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
     let pageNum =  +PAGINATION_BUTTON_CURR.textContent;
     if(pageNum === 1){
-        PAGINATION_BUTTON_FIRST.classList.remove('pagination-button_disabled');
-        PAGINATION_BUTTON_LEFT.classList.remove('pagination-button_disabled');
-        PAGINATION_BUTTON_FIRST.removeAttribute("disabled", "disabled");
-        PAGINATION_BUTTON_LEFT.removeAttribute("disabled", "disabled");
+        removeClassAndAtribute(firstPaginationButtons);
     }
     if(pageNum < lastPage){
         let start = pageNum * notesOnPage;
@@ -277,10 +290,7 @@ function showNextPage(arrOfCards){
         }
         pageNum =  +PAGINATION_BUTTON_CURR.textContent;
         if(pageNum === lastPage){
-            PAGINATION_BUTTON_LAST.classList.add('pagination-button_disabled');
-            PAGINATION_BUTTON_RIGHT.classList.add('pagination-button_disabled');
-            PAGINATION_BUTTON_LAST.setAttribute("disabled", "disabled");
-            PAGINATION_BUTTON_RIGHT.setAttribute("disabled", "disabled");
+            addClassAndAtribute(lastPaginationButtons);
         }
     }
 }
@@ -290,10 +300,7 @@ function showNextPage(arrOfCards){
      [notesOnPage, lastPage] = checkScreenSize(notesOnPage, lastPage);
      let pageNum =  +PAGINATION_BUTTON_CURR.textContent;
      if(pageNum === lastPage){
-        PAGINATION_BUTTON_LAST.classList.remove('pagination-button_disabled');
-        PAGINATION_BUTTON_RIGHT.classList.remove('pagination-button_disabled');
-        PAGINATION_BUTTON_LAST.removeAttribute("disabled", "disabled");
-        PAGINATION_BUTTON_RIGHT.removeAttribute("disabled", "disabled");
+        removeClassAndAtribute(lastPaginationButtons);
      }
      if(pageNum > 1){
          let start = (pageNum - 2) * notesOnPage;
@@ -309,10 +316,7 @@ function showNextPage(arrOfCards){
          }
          pageNum =  +PAGINATION_BUTTON_CURR.textContent;
          if(pageNum === 1){
-              PAGINATION_BUTTON_FIRST.classList.add('pagination-button_disabled');
-                PAGINATION_BUTTON_LEFT.classList.add('pagination-button_disabled');
-                PAGINATION_BUTTON_FIRST.setAttribute("disabled", "disabled");
-                PAGINATION_BUTTON_LEFT.setAttribute("disabled", "disabled");
+            addClassAndAtribute(firstPaginationButtons);
          }
      }
 }
@@ -323,19 +327,7 @@ PAGINATION_BUTTON_LAST.addEventListener('click', () => showLastPage(arrOfCards))
 PAGINATION_BUTTON_RIGHT.addEventListener('click', () => showNextPage(arrOfCards));
 PAGINATION_BUTTON_LEFT.addEventListener('click', () => showPrevPage(arrOfCards));
 
-
-function createCardTemplate(currentCardNumber){
-    const card = document.createElement('li');
-    card.classList.add('card');
-    card.dataset.id = currentCardNumber;
-    const contentCard = `<img src="${petsData[currentCardNumber].img}" 
-    class="card__picture" alt="${petsData[currentCardNumber].type} ${petsData[currentCardNumber].name}"
-    width="270" height="270">
-    <span class="card__title">${petsData[currentCardNumber].name}</span>
-    <button class="card__button">Learn more</button>`;
-    card.insertAdjacentHTML('afterbegin', contentCard);
-    return card;
-}
+window.addEventListener('resize', () => showFirstPage(arrOfCards));
 
 
 let POPUP = document.querySelector('.popup');
