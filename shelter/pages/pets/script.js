@@ -122,9 +122,10 @@ const PAGINATION_BUTTON_LEFT = document.querySelector('.pagination-button__left'
 const PAGINATION_BUTTON_CURR = document.querySelector('.pagination-button__current');
 const PAGINATION_BUTTON_RIGHT = document.querySelector('.pagination-button__right');
 const PAGINATION_BUTTON_LAST = document.querySelector('.pagination-button__last');
+const PAGINATION_BUTTONS_CONTAINER = document.querySelector('.pagination-buttons');
 let randomArr = [];
-const firstPaginationButtons = document.querySelectorAll('.pagination-button__inactive-first');
-const lastPaginationButtons = document.querySelectorAll('.pagination-button__inactive-last');
+const firstPaginationButtons = document.querySelectorAll('#inactive-first');
+const lastPaginationButtons = document.querySelectorAll('#inactive-last');
 
 
 
@@ -321,16 +322,24 @@ function showNextPage(arrOfCards){
      }
 }
 
-
-PAGINATION_BUTTON_FIRST.addEventListener('click', () => showFirstPage(arrOfCards));
-PAGINATION_BUTTON_LAST.addEventListener('click', () => showLastPage(arrOfCards));
-PAGINATION_BUTTON_RIGHT.addEventListener('click', () => showNextPage(arrOfCards));
-PAGINATION_BUTTON_LEFT.addEventListener('click', () => showPrevPage(arrOfCards));
+PAGINATION_BUTTONS_CONTAINER.addEventListener('click', (event) =>{
+    const name = event.target.dataset.name;
+    switch(name){
+            case 'first': showFirstPage(arrOfCards);
+                break;
+            case 'last': showLastPage(arrOfCards);
+                break;
+            case 'right': showNextPage(arrOfCards);
+                break;
+            case 'left': showPrevPage(arrOfCards);
+                break;
+    }
+});
 
 window.addEventListener('resize', () => showFirstPage(arrOfCards));
 
 
-let POPUP = document.querySelector('.popup');
+const POPUP = document.querySelector('.popup');
 let POPUP__CLOSE__BUTTON;
 
 
@@ -369,11 +378,12 @@ function closePopup(){
 
 CARDS_CONTAINER.addEventListener('click', (event) => {
     let cardDataId;
-    if(event.target.classList.contains('card')){
+    const classList = event.target.classList;
+    if(classList.contains('card')){
         cardDataId = event.target.dataset.id;
-    }else if(event.target.classList.contains('card__button') ||
-             event.target.classList.contains('card__title') ||
-             event.target.classList.contains('card__picture')){
+    }else if(classList.contains('card__button') ||
+             classList.contains('card__title') ||
+             classList.contains('card__picture')){
         cardDataId = event.target.closest('li').dataset.id;
     }
     generatePopup(cardDataId);
@@ -383,15 +393,14 @@ CARDS_CONTAINER.addEventListener('click', (event) => {
 });
 
 POPUP.addEventListener('click', (event) => {
-    if(event.target.classList.contains('popup') || 
-    event.target.classList.contains('popup__body') || 
-    event.target.classList.contains('popup__close-img') || 
-    event.target.classList.contains('popup__close')){
+    const classList = event.target.classList;
+    if(classList.contains('popup') || 
+       classList.contains('popup__body') || 
+       classList.contains('popup__close-img') || 
+       classList.contains('popup__close')){
         POPUP__CLOSE__BUTTON.classList.add('animation-popup');
         setTimeout(() => {
             closePopup();
         }, 500);
        }
-    });
-
-
+});

@@ -33,14 +33,14 @@ BODY.addEventListener('click', closeMenu);
 const BTN_LEFT = document.querySelector('.arrow-left');
 const BTN_RIGHT = document.querySelector('.arrow-right');
 const CAROUSEL = document.querySelector('.carousel');
-let itemLeft = document.querySelector('#item-left');
-let itemActive =  document.querySelector('#item-active');
-let itemRight = document.querySelector('#item-right');
+const itemLeft = document.querySelector('#item-left');
+const itemActive =  document.querySelector('#item-active');
+const itemRight = document.querySelector('#item-right');
 let numberCards;
 let pastArr = [];
 let currArr = [];
 let nextArr = [];
-let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
+// let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
 // let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
 let POPUP = document.querySelector('.popup');
 
@@ -137,22 +137,10 @@ const petsData = [
   ];
 
 
-//Проверка на размер экрана
-// function checkScreenSize(){
-//     if(window.innerWidth >= 1279){
-//         numberCards = 3;
-//     }else if(window.innerWidth <= 766){
-//         numberCards = 1;
-//     }else {
-//         numberCards = 2;
-//     }
-//     console.log(numberCards);
-//     return numberCards;
-// }
 
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
-    let randomNumber = Math.floor(Math.random() * 8);
+    const randomNumber = Math.floor(Math.random() * 8);
         if(((secondArr.length === 0) && (firstArr.length === 0)) ||
            ((firstArr.length !== 0) && (!firstArr.includes(randomNumber) && (secondArr.length === 0))) ||
            ((secondArr.length !== 0) && (!secondArr.includes(randomNumber) && (firstArr.length === 0))) ||
@@ -268,7 +256,7 @@ function fillThreeItemsOfCarousel(f){
     for(let i=0; i < carouselItems.length; i++){
         fillCarouselItem(carouselItems[i], cardsArrays[i]);
     }
-    ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
+    // ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
     return [itemLeft, itemActive, itemRight];
 }
 
@@ -351,13 +339,14 @@ function closePopup(){
 }
 
 
-ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
+itemActive.addEventListener('click', (event) => {
     let cardDataId;
+    const classList = event.target.classList;
     if(event.target.classList.contains('card')){
         cardDataId = event.target.dataset.id;
-    }else if(event.target.classList.contains('card__button') ||
-             event.target.classList.contains('card__title') ||
-             event.target.classList.contains('card__picture')){
+    }else if(classList.contains('card__button') ||
+             classList.contains('card__title') ||
+             classList.contains('card__picture')){
         cardDataId = event.target.closest('li').dataset.id;
     }
     generatePopup(cardDataId);
@@ -367,10 +356,11 @@ ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
 });
 
 POPUP.addEventListener('click', (event) => {
-    if(event.target.classList.contains('popup') || 
-    event.target.classList.contains('popup__body') || 
-    event.target.classList.contains('popup__close-img') || 
-    event.target.classList.contains('popup__close')){
+    const classList = event.target.classList;
+    if(classList.contains('popup') || 
+       classList.contains('popup__body') || 
+       classList.contains('popup__close-img') || 
+       classList.contains('popup__close')){
         POPUP__CLOSE__BUTTON.classList.add('animation-popup');
         setTimeout(() => {
             closePopup();
