@@ -8,24 +8,23 @@ const NAV_LINKS = document.querySelectorAll('.navigation__element__link');
 const BODY = document.querySelector('.body');
 const HTML = document.querySelector('html');
 
-HAMBURGER.addEventListener('click', function(){
+
+function toggleClass(){
     HAMBURGER.classList.toggle('active-hamburger');
     MENU.classList.toggle('open');
     BODY.classList.toggle('overlay');
     HTML.classList.toggle('hidden');
-})
+}
 
 function closeMenu(event) {
     if (event.target.classList.contains('navigation__element__link') || event.target.classList.contains('overlay')) {
-        HAMBURGER.classList.remove('active-hamburger');
-        MENU.classList.remove('open');
-        BODY.classList.remove('overlay');
-        HTML.classList.remove('hidden');
+       console.log('hello');
+       toggleClass();
     }
 }
 
-NAV_LINKS.forEach((el) => el.addEventListener('click', closeMenu));
-BODY.addEventListener('click', closeMenu);
+HAMBURGER.addEventListener('click', () => toggleClass());
+BODY.addEventListener('click', (event) => closeMenu(event));
 
 
 //----------------Carousel--------------------/
@@ -40,8 +39,6 @@ let numberCards;
 let pastArr = [];
 let currArr = [];
 let nextArr = [];
-// let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
-// let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
 let POPUP = document.querySelector('.popup');
 
 
@@ -154,7 +151,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 
 //Генерация массива уникальных чисел
 function generateArrays(firstArr, secondArr){
-    for(let i = 0; i < 3/*numberCards*/; i++){
+    for(let i = 0; i < 3; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
      return [firstArr, secondArr];
@@ -162,10 +159,6 @@ function generateArrays(firstArr, secondArr){
 
 //Инициализация
 function init(){
-    // numberCards = checkScreenSize();
-    // let pastArr = [];
-    // let currArr = [];
-    // let nextArr = [];
     generateArrays(nextArr, currArr);
     currArr = nextArr.slice();
     nextArr = [];
@@ -180,7 +173,6 @@ function init(){
 
 //Формирование массивов чисел при прокуртке вперёд
 function forward(){
-    // checkScreenSize();
     pastArr = [];
     pastArr = currArr.slice();
     currArr = [];
@@ -190,20 +182,9 @@ function forward(){
     return [pastArr, currArr, nextArr];
 }
 
-//Формирование массивов чисел при смене направления назад
-function changeToBackward(){
-    // checkScreenSize();
-    let changeArr = pastArr.slice();
-    pastArr = currArr.slice();
-    currArr = changeArr.slice();
-    nextArr = [];
-    generateArrays(nextArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
 
 //Формирование массивов чисел при прокрутке назад
 function backward(){
-    // checkScreenSize();
     nextArr = [];
     nextArr = currArr.slice();
     currArr = [];
@@ -213,16 +194,6 @@ function backward(){
     return [pastArr, currArr, nextArr];
 }
 
-//Формирование массивов чисел при смене направления вперёд
-function changeToForward(){
-    // checkScreenSize();
-    let changeArr = nextArr.slice();
-    nextArr = currArr.slice();
-    currArr = changeArr.slice();
-    pastArr = [];
-    generateArrays(pastArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
 
 //Создание карточки питомца
 function createCardTemplate(currentCardNumber){
@@ -240,8 +211,7 @@ function createCardTemplate(currentCardNumber){
 
 //Заполнение выбранного элемента карточками
 function fillCarouselItem(carouselItem, cardsArr){
-    // numberCards = checkScreenSize();
-    for(let i = 0; i < 3/*numberCards*/; i++){
+    for(let i = 0; i < 3; i++){
         const cardHTML = createCardTemplate(cardsArr[i]);
         (carouselItem).append(cardHTML);
     }
@@ -256,7 +226,6 @@ function fillThreeItemsOfCarousel(f){
     for(let i=0; i < carouselItems.length; i++){
         fillCarouselItem(carouselItems[i], cardsArrays[i]);
     }
-    // ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
     return [itemLeft, itemActive, itemRight];
 }
 
