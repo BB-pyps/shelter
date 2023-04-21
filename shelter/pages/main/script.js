@@ -19,7 +19,7 @@ function toggleClass(){
 function closeMenu(event) {
     if (event.target.classList.contains('navigation__element__link') || 
         event.target.classList.contains('overlay')) {
-       toggleClass();
+        toggleClass();
     }
 }
 
@@ -134,14 +134,20 @@ const petsData = [
   ];
 
 
-
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
-    const randomNumber = Math.floor(Math.random() * 8);
-        if(((secondArr.length === 0) && (firstArr.length === 0)) ||
-           ((firstArr.length !== 0) && (!firstArr.includes(randomNumber) && (secondArr.length === 0))) ||
-           ((secondArr.length !== 0) && (!secondArr.includes(randomNumber) && (firstArr.length === 0))) ||
-           (!firstArr.includes(randomNumber) && !(secondArr.includes(randomNumber)))){
+    let randomNumber = Math.floor(Math.random() * 8);
+
+    const condition1 = secondArr.length === 0 && firstArr.length === 0;
+    const condition2 = firstArr.length !== 0 && 
+                       !firstArr.includes(randomNumber) && 
+                       secondArr.length === 0;
+    const condition3 = secondArr.length !== 0 && 
+                       !secondArr.includes(randomNumber) && 
+                       firstArr.length === 0;
+    const condition4 = !firstArr.includes(randomNumber) && 
+                       !secondArr.includes(randomNumber);
+        if(condition1 || condition2 || condition3 || condition4){
             firstArr.push(randomNumber);
         } else {
             generateRandomNumberAndPushElem(firstArr, secondArr);
