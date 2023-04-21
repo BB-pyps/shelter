@@ -4,27 +4,25 @@ const NAV_LINKS = document.querySelectorAll('.navigation__element__link');
 const BODY = document.querySelector('.body');
 const HTML = document.querySelector('html');
 
-HAMBURGER.addEventListener('click', function () {
+
+function toggleClass(){
   HAMBURGER.classList.toggle('active-hamburger');
   MENU.classList.toggle('open');
-  BODY.classList.toggle('hidden');
   BODY.classList.toggle('overlay');
-});
+  HTML.classList.toggle('hidden');
+}
 
 function closeMenu(event) {
-  if (
-    event.target.classList.contains('navigation__element__link') ||
-    event.target.classList.contains('overlay')
-  ) {
-    HAMBURGER.classList.remove('active-hamburger');
-    MENU.classList.remove('open');
-    BODY.classList.remove('hidden');
-    BODY.classList.remove('overlay');
+  if (event.target.classList.contains('navigation__element__link') || 
+      event.target.classList.contains('overlay')) {
+      toggleClass();
   }
 }
 
-NAV_LINKS.forEach((el) => el.addEventListener('click', closeMenu));
-BODY.addEventListener('click', closeMenu);
+HAMBURGER.addEventListener('click', () => toggleClass());
+BODY.addEventListener('click', (event) => closeMenu(event));
+
+
 
 const petsData = [
   {

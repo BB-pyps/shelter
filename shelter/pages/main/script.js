@@ -17,8 +17,8 @@ function toggleClass(){
 }
 
 function closeMenu(event) {
-    if (event.target.classList.contains('navigation__element__link') || event.target.classList.contains('overlay')) {
-       console.log('hello');
+    if (event.target.classList.contains('navigation__element__link') || 
+        event.target.classList.contains('overlay')) {
        toggleClass();
     }
 }
