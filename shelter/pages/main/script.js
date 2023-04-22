@@ -136,17 +136,19 @@ const petsData = [
 
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
-    const randomNumber = Math.floor(Math.random() * 8);
+    console.log(firstArr);
+    console.log(secondArr);
+    let randomNumber = Math.floor(Math.random() * 8);
 
-    const condition1 = secondArr.length === 0 && firstArr.length === 0;
-    const condition2 = firstArr.length !== 0 && 
+    const condition1 = (secondArr.length === 0 && firstArr.length === 0);
+    const condition2 = (firstArr.length !== 0 && 
                        !firstArr.includes(randomNumber) && 
-                       secondArr.length === 0;
-    const condition3 = secondArr.length !== 0 && 
+                       secondArr.length === 0);
+    const condition3 = (secondArr.length !== 0 && 
                        !secondArr.includes(randomNumber) && 
-                       firstArr.length === 0;
-    const condition4 = !firstArr.includes(randomNumber) && 
-                       !secondArr.includes(randomNumber);
+                       firstArr.length === 0);
+    const condition4 = (!firstArr.includes(randomNumber) && 
+                       !secondArr.includes(randomNumber));
         if(condition1 || condition2 || condition3 || condition4){
             firstArr.push(randomNumber);
         } else {
@@ -158,6 +160,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 //Генерация массива уникальных чисел
 function generateArrays(firstArr, secondArr){
     for(let i = 0; i < 3; i++){
+        console.log('Hello');
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
      return [firstArr, secondArr];
@@ -167,21 +170,27 @@ function generateArrays(firstArr, secondArr){
 function init(){
     generateArrays(nextArr, currArr);
     currArr = nextArr.slice();
+    nextArr = [];
     generateArrays(nextArr, currArr);
     pastArr = currArr.slice();
+    currArr = [];
     currArr = nextArr.slice();
+    nextArr = [];
     generateArrays(nextArr, currArr);
+    return [pastArr, currArr, nextArr];
 }
 
 
-function scrollSlider(next){
-    if(next){
+function scrollSlider(value){
+    if(value){
         pastArr = currArr.slice();
         currArr = nextArr.slice();
+        nextArr = [];
         generateArrays(nextArr, currArr);
     }else{
         nextArr = currArr.slice();
         currArr = pastArr.slice();
+        pastArr = [];
         generateArrays(pastArr, currArr);
     }
     return [pastArr, currArr, nextArr];
@@ -258,7 +267,7 @@ CAROUSEL.addEventListener('animationend', (animationEvent) => {
     } else {
         CAROUSEL.classList.remove("transition-right");
         clearItems();
-        fillThreeItemsOfCarousel(scrollSlider(next));
+        fillThreeItemsOfCarousel(scrollSlider(true));
     }
 
     BTN_LEFT.addEventListener('click', moveLeft);
