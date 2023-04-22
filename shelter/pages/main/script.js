@@ -222,6 +222,12 @@ function fillThreeItemsOfCarousel(f){
     return [itemLeft, itemActive, itemRight];
 }
 
+function clearItems(){
+    itemRight.innerHTML = ``;
+    itemActive.innerHTML = ``;
+    itemLeft.innerHTML = ``;
+}
+
 fillThreeItemsOfCarousel(init());
 
 const moveLeft = () => {
@@ -231,7 +237,6 @@ const moveLeft = () => {
 }
 
 const moveRight = () => {
-    console.log(pastArr, currArr, nextArr);
     CAROUSEL.classList.add('transition-right');
     BTN_RIGHT.removeEventListener('click', moveRight);
     BTN_LEFT.removeEventListener('click', moveLeft);
@@ -248,15 +253,11 @@ BTN_RIGHT.addEventListener('click', moveRight);
 CAROUSEL.addEventListener('animationend', (animationEvent) => {
     if (animationEvent.animationName === "move-left") {
         CAROUSEL.classList.remove("transition-left");
-        itemRight.innerHTML = ``;
-        itemActive.innerHTML = ``;
-        itemLeft.innerHTML = ``;
+        clearItems();
         fillThreeItemsOfCarousel(scrollSlider());
     } else {
         CAROUSEL.classList.remove("transition-right");
-        itemRight.innerHTML = ``;
-        itemActive.innerHTML = ``;
-        itemLeft.innerHTML = ``;
+        clearItems();
         fillThreeItemsOfCarousel(scrollSlider(next));
     }
 
