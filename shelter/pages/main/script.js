@@ -136,7 +136,7 @@ const petsData = [
 
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
-    let randomNumber = Math.floor(Math.random() * 8);
+    const randomNumber = Math.floor(Math.random() * 8);
 
     const condition1 = secondArr.length === 0 && firstArr.length === 0;
     const condition2 = firstArr.length !== 0 && 
@@ -167,36 +167,23 @@ function generateArrays(firstArr, secondArr){
 function init(){
     generateArrays(nextArr, currArr);
     currArr = nextArr.slice();
-    nextArr = [];
     generateArrays(nextArr, currArr);
     pastArr = currArr.slice();
-    currArr = [];
     currArr = nextArr.slice();
-    nextArr = [];
     generateArrays(nextArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
-
-//Формирование массивов чисел при прокуртке вперёд
-function forward(){
-    pastArr = [];
-    pastArr = currArr.slice();
-    currArr = [];
-    currArr = nextArr.slice();
-    nextArr = [];
-    generateArrays(nextArr, currArr);
-    return [pastArr, currArr, nextArr];
 }
 
 
-//Формирование массивов чисел при прокрутке назад
-function backward(){
-    nextArr = [];
-    nextArr = currArr.slice();
-    currArr = [];
-    currArr = pastArr.slice();
-    pastArr = [];
-    generateArrays(pastArr, currArr);
+function scrollSlider(next){
+    if(next){
+        pastArr = currArr.slice();
+        currArr = nextArr.slice();
+        generateArrays(nextArr, currArr);
+    }else{
+        nextArr = currArr.slice();
+        currArr = pastArr.slice();
+        generateArrays(pastArr, currArr);
+    }
     return [pastArr, currArr, nextArr];
 }
 
@@ -264,13 +251,13 @@ CAROUSEL.addEventListener('animationend', (animationEvent) => {
         itemRight.innerHTML = ``;
         itemActive.innerHTML = ``;
         itemLeft.innerHTML = ``;
-        fillThreeItemsOfCarousel(backward());
+        fillThreeItemsOfCarousel(scrollSlider());
     } else {
         CAROUSEL.classList.remove("transition-right");
         itemRight.innerHTML = ``;
         itemActive.innerHTML = ``;
         itemLeft.innerHTML = ``;
-        fillThreeItemsOfCarousel(forward());
+        fillThreeItemsOfCarousel(scrollSlider(next));
     }
 
     BTN_LEFT.addEventListener('click', moveLeft);
