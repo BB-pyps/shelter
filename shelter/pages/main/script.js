@@ -8,24 +8,23 @@ const NAV_LINKS = document.querySelectorAll('.navigation__element__link');
 const BODY = document.querySelector('.body');
 const HTML = document.querySelector('html');
 
-HAMBURGER.addEventListener('click', function(){
+
+function toggleClass(){
     HAMBURGER.classList.toggle('active-hamburger');
     MENU.classList.toggle('open');
     BODY.classList.toggle('overlay');
     HTML.classList.toggle('hidden');
-})
+}
 
 function closeMenu(event) {
-    if (event.target.classList.contains('navigation__element__link') || event.target.classList.contains('overlay')) {
-        HAMBURGER.classList.remove('active-hamburger');
-        MENU.classList.remove('open');
-        BODY.classList.remove('overlay');
-        HTML.classList.remove('hidden');
+    if (event.target.classList.contains('navigation__element__link') || 
+        event.target.classList.contains('overlay')) {
+        toggleClass();
     }
 }
 
-NAV_LINKS.forEach((el) => el.addEventListener('click', closeMenu));
-BODY.addEventListener('click', closeMenu);
+HAMBURGER.addEventListener('click', () => toggleClass());
+BODY.addEventListener('click', (event) => closeMenu(event));
 
 
 //----------------Carousel--------------------/
@@ -33,15 +32,13 @@ BODY.addEventListener('click', closeMenu);
 const BTN_LEFT = document.querySelector('.arrow-left');
 const BTN_RIGHT = document.querySelector('.arrow-right');
 const CAROUSEL = document.querySelector('.carousel');
-let itemLeft = document.querySelector('#item-left');
-let itemActive =  document.querySelector('#item-active');
-let itemRight = document.querySelector('#item-right');
+const itemLeft = document.querySelector('#item-left');
+const itemActive =  document.querySelector('#item-active');
+const itemRight = document.querySelector('#item-right');
 let numberCards;
 let pastArr = [];
 let currArr = [];
 let nextArr = [];
-let ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
-// let ANIMAL_CARDS_COLLECTION = Array.from(ANIMAL_CARDS_CONTEINER.children);
 let POPUP = document.querySelector('.popup');
 
 
@@ -137,26 +134,20 @@ const petsData = [
   ];
 
 
-//Проверка на размер экрана
-// function checkScreenSize(){
-//     if(window.innerWidth >= 1279){
-//         numberCards = 3;
-//     }else if(window.innerWidth <= 766){
-//         numberCards = 1;
-//     }else {
-//         numberCards = 2;
-//     }
-//     console.log(numberCards);
-//     return numberCards;
-// }
-
 //Генерация уникального числа 
 function generateRandomNumberAndPushElem(firstArr, secondArr){
-    let randomNumber = Math.floor(Math.random() * 8);
-        if(((secondArr.length === 0) && (firstArr.length === 0)) ||
-           ((firstArr.length !== 0) && (!firstArr.includes(randomNumber) && (secondArr.length === 0))) ||
-           ((secondArr.length !== 0) && (!secondArr.includes(randomNumber) && (firstArr.length === 0))) ||
-           (!firstArr.includes(randomNumber) && !(secondArr.includes(randomNumber)))){
+    const randomNumber = Math.floor(Math.random() * 8);
+
+    const condition1 = secondArr.length === 0 && firstArr.length === 0;
+    const condition2 = firstArr.length !== 0 && 
+                       !firstArr.includes(randomNumber) && 
+                       secondArr.length === 0;
+    const condition3 = secondArr.length !== 0 && 
+                       !secondArr.includes(randomNumber) && 
+                       firstArr.length === 0;
+    const condition4 = !firstArr.includes(randomNumber) && 
+                       !secondArr.includes(randomNumber);
+        if(condition1 || condition2 || condition3 || condition4){
             firstArr.push(randomNumber);
         } else {
             generateRandomNumberAndPushElem(firstArr, secondArr);
@@ -166,7 +157,7 @@ function generateRandomNumberAndPushElem(firstArr, secondArr){
 
 //Генерация массива уникальных чисел
 function generateArrays(firstArr, secondArr){
-    for(let i = 0; i < 3/*numberCards*/; i++){
+    for(let i = 0; i < 3; i++){
         generateRandomNumberAndPushElem(firstArr, secondArr);
     }
      return [firstArr, secondArr];
@@ -174,67 +165,28 @@ function generateArrays(firstArr, secondArr){
 
 //Инициализация
 function init(){
-    // numberCards = checkScreenSize();
-    // let pastArr = [];
-    // let currArr = [];
-    // let nextArr = [];
     generateArrays(nextArr, currArr);
     currArr = nextArr.slice();
-    nextArr = [];
     generateArrays(nextArr, currArr);
     pastArr = currArr.slice();
-    currArr = [];
     currArr = nextArr.slice();
-    nextArr = [];
     generateArrays(nextArr, currArr);
+}
+
+
+function scrollSlider(next){
+    if(next){
+        pastArr = currArr.slice();
+        currArr = nextArr.slice();
+        generateArrays(nextArr, currArr);
+    }else{
+        nextArr = currArr.slice();
+        currArr = pastArr.slice();
+        generateArrays(pastArr, currArr);
+    }
     return [pastArr, currArr, nextArr];
 }
 
-//Формирование массивов чисел при прокуртке вперёд
-function forward(){
-    // checkScreenSize();
-    pastArr = [];
-    pastArr = currArr.slice();
-    currArr = [];
-    currArr = nextArr.slice();
-    nextArr = [];
-    generateArrays(nextArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
-
-//Формирование массивов чисел при смене направления назад
-function changeToBackward(){
-    // checkScreenSize();
-    let changeArr = pastArr.slice();
-    pastArr = currArr.slice();
-    currArr = changeArr.slice();
-    nextArr = [];
-    generateArrays(nextArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
-
-//Формирование массивов чисел при прокрутке назад
-function backward(){
-    // checkScreenSize();
-    nextArr = [];
-    nextArr = currArr.slice();
-    currArr = [];
-    currArr = pastArr.slice();
-    pastArr = [];
-    generateArrays(pastArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
-
-//Формирование массивов чисел при смене направления вперёд
-function changeToForward(){
-    // checkScreenSize();
-    let changeArr = nextArr.slice();
-    nextArr = currArr.slice();
-    currArr = changeArr.slice();
-    pastArr = [];
-    generateArrays(pastArr, currArr);
-    return [pastArr, currArr, nextArr];
-}
 
 //Создание карточки питомца
 function createCardTemplate(currentCardNumber){
@@ -252,8 +204,7 @@ function createCardTemplate(currentCardNumber){
 
 //Заполнение выбранного элемента карточками
 function fillCarouselItem(carouselItem, cardsArr){
-    // numberCards = checkScreenSize();
-    for(let i = 0; i < 3/*numberCards*/; i++){
+    for(let i = 0; i < 3; i++){
         const cardHTML = createCardTemplate(cardsArr[i]);
         (carouselItem).append(cardHTML);
     }
@@ -268,8 +219,13 @@ function fillThreeItemsOfCarousel(f){
     for(let i=0; i < carouselItems.length; i++){
         fillCarouselItem(carouselItems[i], cardsArrays[i]);
     }
-    ANIMAL_CARDS_CONTEINER = document.querySelector('#item-active');
     return [itemLeft, itemActive, itemRight];
+}
+
+function clearItems(){
+    itemRight.innerHTML = ``;
+    itemActive.innerHTML = ``;
+    itemLeft.innerHTML = ``;
 }
 
 fillThreeItemsOfCarousel(init());
@@ -281,7 +237,6 @@ const moveLeft = () => {
 }
 
 const moveRight = () => {
-    console.log(pastArr, currArr, nextArr);
     CAROUSEL.classList.add('transition-right');
     BTN_RIGHT.removeEventListener('click', moveRight);
     BTN_LEFT.removeEventListener('click', moveLeft);
@@ -298,16 +253,12 @@ BTN_RIGHT.addEventListener('click', moveRight);
 CAROUSEL.addEventListener('animationend', (animationEvent) => {
     if (animationEvent.animationName === "move-left") {
         CAROUSEL.classList.remove("transition-left");
-        itemRight.innerHTML = ``;
-        itemActive.innerHTML = ``;
-        itemLeft.innerHTML = ``;
-        fillThreeItemsOfCarousel(backward());
+        clearItems();
+        fillThreeItemsOfCarousel(scrollSlider());
     } else {
         CAROUSEL.classList.remove("transition-right");
-        itemRight.innerHTML = ``;
-        itemActive.innerHTML = ``;
-        itemLeft.innerHTML = ``;
-        fillThreeItemsOfCarousel(forward());
+        clearItems();
+        fillThreeItemsOfCarousel(scrollSlider(next));
     }
 
     BTN_LEFT.addEventListener('click', moveLeft);
@@ -351,13 +302,14 @@ function closePopup(){
 }
 
 
-ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
+itemActive.addEventListener('click', (event) => {
     let cardDataId;
+    const classList = event.target.classList;
     if(event.target.classList.contains('card')){
         cardDataId = event.target.dataset.id;
-    }else if(event.target.classList.contains('card__button') ||
-             event.target.classList.contains('card__title') ||
-             event.target.classList.contains('card__picture')){
+    }else if(classList.contains('card__button') ||
+             classList.contains('card__title') ||
+             classList.contains('card__picture')){
         cardDataId = event.target.closest('li').dataset.id;
     }
     generatePopup(cardDataId);
@@ -367,10 +319,11 @@ ANIMAL_CARDS_CONTEINER.addEventListener('click', (event) => {
 });
 
 POPUP.addEventListener('click', (event) => {
-    if(event.target.classList.contains('popup') || 
-    event.target.classList.contains('popup__body') || 
-    event.target.classList.contains('popup__close-img') || 
-    event.target.classList.contains('popup__close')){
+    const classList = event.target.classList;
+    if(classList.contains('popup') || 
+       classList.contains('popup__body') || 
+       classList.contains('popup__close-img') || 
+       classList.contains('popup__close')){
         POPUP__CLOSE__BUTTON.classList.add('animation-popup');
         setTimeout(() => {
             closePopup();
