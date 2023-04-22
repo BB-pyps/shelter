@@ -17,8 +17,9 @@ function toggleClass(){
 }
 
 function closeMenu(event) {
-    if (event.target.classList.contains('navigation__element__link') || 
-        event.target.classList.contains('overlay')) {
+    if (HAMBURGER.classList.contains('active-hamburger') &&
+       (event.target.classList.contains('navigation__element__link') || 
+        event.target.classList.contains('overlay'))) {
         toggleClass();
     }
 }
